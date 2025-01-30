@@ -4,13 +4,13 @@
 }
 
 .ball {
-    width: 150px; /* Możesz dostosować rozmiar */
+    width: 150px;
     height: 150px;
-    cursor: pointer; /* Wskazanie, że to element klikalny */
-    border-radius: 50%; /* Aby upewnić się, że wygląda jak piłka */
+    cursor: pointer;
+    border-radius: 50%;
     transition: transform 0.1s ease-in-out;
 }
 
 .ball:active {
-    transform: scale(0.9); /* Efekt kliknięcia */
+    transform: scale(0.9);
 }

@@ -1,6 +1,17 @@
-<div class="clicker-container">
+<div *ngIf="this.loading" class="loading-stage">
+    <mat-spinner></mat-spinner>
+    <p>Ładowanie...</p>
+</div>
+
+<div *ngIf="!this.loading" class="clicker-container">
     <h1>Witaj w Football Clicker</h1>
+    <h2>
+        Wybrane konto: {{ this.selectedAccount.name }}
+        {{ this.selectedAccount.surname }}
+    </h2>
     <p>Licznik: {{ counter }}</p>
-    
+
     <img src="ball.png" alt="Piłka" class="ball" (click)="increment()" />
+
+    <button mat-raised-button (click)="endGame()">Zapisz i zakończ</button>
 </div>

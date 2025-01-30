@@ -1,0 +1,11 @@
+<h4>Wybierz konto</h4>
+<mat-form-field>
+  <mat-label>Dostepne konta</mat-label>
+  <mat-select [(ngModel)]="selectedAccount">
+    @for (account of accounts; track account) {
+      <mat-option [value]="account">{{ account.name }} {{ account.surname }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+
+<button mat-raised-button (click)="play()" [disabled]="!selectedAccount">Graj!</button>
