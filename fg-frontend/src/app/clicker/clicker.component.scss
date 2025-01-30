@@ -1,0 +1,16 @@
+.clicker-container {
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.ball {
+    width: 150px; /* Możesz dostosować rozmiar */
+    height: 150px;
+    cursor: pointer; /* Wskazanie, że to element klikalny */
+    border-radius: 50%; /* Aby upewnić się, że wygląda jak piłka */
+    transition: transform 0.1s ease-in-out;
+}
+
+.ball:active {
+    transform: scale(0.9); /* Efekt kliknięcia */
+}
