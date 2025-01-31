@@ -12,7 +12,7 @@ export class UsersService {
     private readonly usersRepository: Repository<User>,
   ) {}
 
-  findAll() {
+  async findAll() {
     return this.usersRepository.find();
   }
 
@@ -24,7 +24,7 @@ export class UsersService {
     return user;
   }
 
-  create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto) {
     const user = this.usersRepository.create(createUserDto);
     return this.usersRepository.save(user);
   }
@@ -35,7 +35,7 @@ export class UsersService {
   }
 
   async remove(id: string) {
-    const coffee = await this.findOne(id);
-    return this.usersRepository.remove(coffee);
+    const user = await this.findOne(id);
+    return this.usersRepository.remove(user);
   }
 }

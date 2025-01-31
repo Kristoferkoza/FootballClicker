@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from '../_models/users/user.model';
-import { UsersService } from '../_services/users.service';
+import { UsersService } from '../_services/users/users.service';
 import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
