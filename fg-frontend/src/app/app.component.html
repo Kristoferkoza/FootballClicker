@@ -1,1 +1,9 @@
-<router-outlet></router-outlet>
+
+<div class="app">
+    <div class="submenu" *ngIf="showMenu">
+        <app-sidebar></app-sidebar>
+    </div>
+    <div class="main-wrapper">
+        <router-outlet></router-outlet>
+    </div>
+</div>

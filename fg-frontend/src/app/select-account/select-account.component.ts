@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {MatButtonModule} from '@angular/material/button';
 import { Router } from '@angular/router';
+import { GameService } from '../_services/game/game.service';
 
 @Component({
   selector: 'app-select-account',
@@ -21,9 +22,10 @@ export class SelectAccountComponent implements OnInit {
   accounts: User[] = [];
   selectedAccount: User | null = null;
 
-  constructor(private usersService: UsersService, private router: Router) {}
+  constructor(private usersService: UsersService, private router: Router, private gameService: GameService) {}
 
   ngOnInit() {
+    this.gameService.deleteCounter();
     this.usersService.findAll().subscribe((accounts => {
       this.accounts = accounts as User[];
     }));

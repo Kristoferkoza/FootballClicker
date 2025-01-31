@@ -1,9 +1,12 @@
-.clicker-container {
+.game-container {
     text-align: center;
-    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.ball {
+.game-ball {
+    padding: 20px;
     width: 150px;
     height: 150px;
     cursor: pointer;
@@ -11,6 +14,23 @@
     transition: transform 0.1s ease-in-out;
 }
 
-.ball:active {
+.game-ball:active {
     transform: scale(0.9);
 }
+
+.game-title {
+    font-size: 2.8rem;
+    margin-bottom: 12px;
+}
+
+.game-account {
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+}
+
+.game-score {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+}
+
+

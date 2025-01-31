@@ -32,4 +32,8 @@ export class UsersService {
     setSelectedAccountId(accountId: string) {
         localStorage.setItem('selectedAccountId', accountId);
     }
+
+    removeSelectedAccountId() {
+        localStorage.removeItem('selectedAccountId');
+    }
 }
