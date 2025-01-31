@@ -5,4 +5,5 @@ export interface UpdateCard {
     nationality?: string;
     club?: string;
     cardType?: string;
+    imageUrl?: string;
 }

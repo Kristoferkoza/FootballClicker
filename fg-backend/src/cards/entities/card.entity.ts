@@ -27,4 +27,7 @@ export class Card {
 
     @Column({ type: 'enum', enum: CardType })
     cardType: CardType;
+
+    @Column({ default: 'defaultImageURL' })
+    imageUrl: string;
 }

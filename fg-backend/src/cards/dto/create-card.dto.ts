@@ -19,4 +19,7 @@ export class CreateCardDto {
 
     @IsEnum(CardType)
     readonly cardType: CardType;
+
+    @IsString()
+    readonly imageUrl: string;
 }

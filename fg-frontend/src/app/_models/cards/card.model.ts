@@ -6,4 +6,5 @@ export interface Card {
     nationality: string;
     club: string;
     cardType: string;
+    imageUrl: string;
 }
