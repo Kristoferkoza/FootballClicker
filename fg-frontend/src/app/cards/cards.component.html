@@ -1,5 +1,12 @@
 <h1>Karty</h1>
 <div class="row">
-  <div *ngFor="let card of cards">
-    <p>{{card.name}} {{card.overall}}</p>
+  <div *ngIf="cards && cards.length > 0; else noCards">
+    <div *ngFor="let card of cards">
+      <p>{{ card.name }} {{ card.overall }}</p>
+    </div>
   </div>
+
+  <ng-template #noCards>
+    <p>Brak kart</p>
+  </ng-template>
+</div>

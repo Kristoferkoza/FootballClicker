@@ -29,6 +29,10 @@ export class UsersService {
         return this.http.delete(`http://localhost:3000/users/${id}`);
     }
 
+    getSelectedAccountId() {
+        return localStorage.getItem('selectedAccountId')
+    }
+
     setSelectedAccountId(accountId: string) {
         localStorage.setItem('selectedAccountId', accountId);
     }

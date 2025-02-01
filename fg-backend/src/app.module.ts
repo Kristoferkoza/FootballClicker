@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { CardsModule } from './cards/cards.module';
+import { UserCardsModule } from './usercard/user-cards.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CardsModule } from './cards/cards.module';
       synchronize: true,
     }),
     CardsModule,
+    UserCardsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,15 +1,11 @@
 export enum CardType {
-    GOLD_RARE = 'Złota rzadka',
-    GOLD_NONRARE = 'Złota nierzadka',
+    BLUE = 'common', // 1 - 55
+    PINK = 'rare', // 56 - 70
+    PURPLE = 'epic', // 71 - 85
+    YELLOW = 'legendary', // 86 - 99
 
-    SILVER_RARE = 'Srebrna rzadka',
-    SILVER_NONRARE = 'Srebrna nierzadka',
+    SPECIAL_TOTW = 'totw',
+    SPECIAL_TOTS = 'tots',
 
-    BRONZE_RARE = 'Brązowa rzadka',
-    BRONZE_NONRARE = 'Brązowa nierzadka',
 
-    ICON = 'Ikona',
-    TOTY = 'Drużyna roku',
-    TOTS = 'Drużyna sezonu',
-    TOTW = 'Drużyna tygodnia',
 }
