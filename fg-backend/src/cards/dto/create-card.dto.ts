@@ -22,4 +22,22 @@ export class CreateCardDto {
 
     @IsString()
     readonly imageUrl: string;
+
+    @IsNumber()
+    readonly tem: number;
+
+    @IsNumber()
+    readonly str: number;
+
+    @IsNumber()
+    readonly pod: number;
+
+    @IsNumber()
+    readonly dry: number;
+
+    @IsNumber()
+    readonly def: number;
+
+    @IsNumber()
+    readonly fiz: number;
 }

@@ -33,4 +33,40 @@ export class Card {
 
   @OneToMany(() => UserCard, (userCard) => userCard.card, { cascade: true })
   userCards: UserCard[];
+
+  @Column()
+  @Min(1)
+  @Max(99)
+  tem: number;
+
+  @Column()
+  @Min(1)
+  @Max(99)
+  str: number;
+
+
+  @Column()
+  @Min(1)
+  @Max(99)
+  pod: number;
+
+
+  @Column()
+  @Min(1)
+  @Max(99)
+  dry: number;
+
+
+  @Column()
+  @Min(1)
+  @Max(99)
+  def: number;
+
+
+  @Column()
+  @Min(1)
+  @Max(99)
+  fiz: number;
+
+
 }
