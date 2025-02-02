@@ -1,4 +1,9 @@
-<div class="sidebar">
+<div *ngIf="this.loading" class="loading-stage">
+    <mat-spinner></mat-spinner>
+    <p>Ładowanie...</p>
+</div>
+
+<div *ngIf="!this.loading" class="sidebar">
     <div class="sidebar__header">
         <div class="sidebar__logo">
             <img src="ball.png" alt="logo" />
@@ -14,9 +19,28 @@
             <div class="sidebar__item__icon"><img src="icons/players.svg" alt="."></div>
             <div class="sidebar__item__text">Karty</div>
         </div>
-        <div class="sidebar__item" (click)="navigateTo('sklep')">
+        <div class="sidebar__item" (click)="navigateTo('shop')">
             <div class="sidebar__item__icon"><img src="icons/shop.svg" alt="."></div>
             <div class="sidebar__item__text">Sklep</div>
+        </div>
+        <div class="sidebar__item" (click)="navigateTo('packs')">
+            <div class="sidebar__item__icon"><img src="icons/pack.svg" alt="."></div>
+            <div class="sidebar__item__text">Paczki</div>
+        </div>
+        <div class="sidebar__item" (click)="navigateTo('settings')">
+            <div class="sidebar__item__icon"><img src="icons/settings.svg" alt="."></div>
+            <div class="sidebar__item__text">Ustawienia</div>
+        </div>
+    </div>
+    <div class="sidebar__account" (click)="navigateTo('user')">
+        <div class="sidebar__account__photo">
+            <img src="user.png" alt=".">
+        </div>
+        <div class="sidebar__account__name">
+            {{selectedUser.name}} {{selectedUser.surname}}
+        </div>
+        <div class="sidebar__account__icon">
+            <img src="icons/edit.svg" alt=".">
         </div>
     </div>
 </div>

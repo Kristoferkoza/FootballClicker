@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { CardsService } from '../_services/cards/cards.service';
-import { Card } from '../_models/cards/card.model';
+import { CardsService } from '../../_services/cards/cards.service';
+import { Card } from '../../_models/cards/card.model';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { UserCardsService } from '../_services/usercard/user-cards.service';
-import { UsersService } from '../_services/users/users.service';
-import { UserCards } from '../_models/usercard/user-cards.model';
+import { UserCardsService } from '../../_services/usercard/user-cards.service';
+import { UsersService } from '../../_services/users/users.service';
+import { UserCards } from '../../_models/usercard/user-cards.model';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { CardType } from '../_enums/card-type.enum';
-import { ClubNamePipe } from '../_pipes/club-name.pipe';
-import { FlagiKrajow } from '../_enums/flags.enum';
+import { CardType } from '../../_enums/card-type.enum';
+import { ClubNamePipe } from '../../_pipes/club-name.pipe';
+import { FlagiKrajow } from '../../_enums/flags.enum';
 
 @Component({
   selector: 'app-cards',
