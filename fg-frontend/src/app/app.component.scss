@@ -1,12 +1,28 @@
+// Główny kontener aplikacji
 .app {
     display: flex;
     flex-direction: row;
     height: 100vh;
-}
-
-.main-wrapper {
+  
+    // Jeśli nie ma sidebara, cała zawartość wyśrodkowana
+    &.no-sidebar {
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  
+  // Sidebar – przyjmujemy stałą szerokość (np. 250px)
+  .submenu {
+    flex: 0 0 250px;
+    background-color: #f4f4f4; // przykładowe tło
+    border-right: 1px solid #e0e0e0;
+  }
+  
+  .main-wrapper {
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-grow: 1;
-}
+    padding: 20px;
+  }
+  

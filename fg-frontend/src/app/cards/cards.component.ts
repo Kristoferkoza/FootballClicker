@@ -9,6 +9,7 @@ import { UserCards } from '../_models/usercard/user-cards.model';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CardType } from '../_enums/card-type.enum';
 import { ClubNamePipe } from '../_pipes/club-name.pipe';
+import { FlagiKrajow } from '../_enums/flags.enum';
 
 @Component({
   selector: 'app-cards',
@@ -19,19 +20,15 @@ import { ClubNamePipe } from '../_pipes/club-name.pipe';
   styleUrls: ['./cards.component.scss'],
 })
 export class CardsComponent implements OnInit {
-  // Możliwe tryby wyświetlania: 'grid' (widok graficzny) lub 'list' (tabela)
+  
   viewMode: 'grid' | 'list' = 'grid';
 
   selectedUserId: string = '';
-  // Wszystkie karty z bazy danych
+  
   allCards: Card[] = [];
-  // Karty posiadane przez użytkownika
+  
   userCards: UserCards[] = [];
-  /**
-   * Mapowanie: klucz = id karty, wartość = obiekt UserCards,
-   * dzięki któremu łatwo ustalimy, czy użytkownik posiada daną kartę,
-   * oraz uzyskamy datę pierwszego znalezienia i ilość.
-   */
+  
   ownedCardsMap: { [cardId: string]: UserCards } = {};
 
   constructor(
@@ -89,4 +86,8 @@ export class CardsComponent implements OnInit {
   get legendaryCards(): Card[] {
     return this.allCards.filter(card => card.cardType === CardType.YELLOW);
   }
+
+  getFlagCode = (nationality: string): string | undefined => {
+    return FlagiKrajow[nationality as keyof typeof FlagiKrajow];
+  };
 }

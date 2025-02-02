@@ -1,5 +1,4 @@
-
-<div class="app">
+<div class="app" [ngClass]="{'no-sidebar': !showMenu}">
     <div class="submenu" *ngIf="showMenu">
         <app-sidebar></app-sidebar>
     </div>

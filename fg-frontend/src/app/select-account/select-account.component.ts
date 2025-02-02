@@ -9,32 +9,32 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatButtonModule} from '@angular/material/button';
 import { Router } from '@angular/router';
 import { GameService } from '../_services/game/game.service';
+import { CommonModule } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-select-account',
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule, MatButtonModule, HttpClientModule],
+  imports: [CommonModule, MatDivider, MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule, MatButtonModule, HttpClientModule],
   providers: [UsersService],
   templateUrl: './select-account.component.html',
   styleUrl: './select-account.component.scss'
 })
 export class SelectAccountComponent implements OnInit {
   accounts: User[] = [];
-  selectedAccount: User | null = null;
 
   constructor(private usersService: UsersService, private router: Router, private gameService: GameService) {}
 
   ngOnInit() {
+    this.accounts = [];
     this.gameService.deleteCounter();
     this.usersService.findAll().subscribe((accounts => {
       this.accounts = accounts as User[];
     }));
   }
 
-  play() {
-    if (this.selectedAccount) {
-      this.usersService.setSelectedAccountId(this.selectedAccount.id);
-      this.router.navigate(['/clicker']);
-    }
+  play(userId: string) {
+    this.usersService.setSelectedAccountId(userId);
+    this.router.navigate(['/clicker']);
   }
 }

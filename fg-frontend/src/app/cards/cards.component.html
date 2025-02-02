@@ -4,86 +4,86 @@
     <button (click)="toggleViewMode('list')">Widok Listy</button>
 </div>
 
-<!-- Widok graficzny: karty podzielone według typu -->
 <div *ngIf="viewMode === 'grid'">
-    <section *ngIf="commonCards.length">
-        <h2>Karty Common</h2>
-        <div class="card-group">
-            <div *ngFor="let card of commonCards" class="card-item">
-                <img
-                    [src]="'cards/' + card.club + '/' + card.imageUrl + '.png'"
-                    [class.grayscale]="!isOwned(card)"
-                    alt="{{ card.name }}"
-                />
-                <span *ngIf="isOwned(card)">
-                    Znaleziona
-                    {{ getFirstFoundDate(card) }} ({{
-                        getQuantity(card)
-                    }})
-                </span>
+    <div class="grid-view">
+        <mat-expansion-panel *ngIf="commonCards.length">
+            <mat-expansion-panel-header>
+                <mat-panel-title> Karty Common </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="card-group">
+                <div *ngFor="let card of commonCards" class="card-item">
+                    <img
+                        [src]="'cards/' + card.club + '/' + card.imageUrl + '.png'"
+                        [class.grayscale]="!isOwned(card)"
+                        alt="{{ card.name }}"
+                    />
+                    <span *ngIf="isOwned(card)">
+                        Znaleziona
+                        {{ getFirstFoundDate(card) }} ({{ getQuantity(card) }})
+                    </span>
+                </div>
             </div>
-        </div>
-    </section>
-
-    <section *ngIf="rareCards.length">
-        <h2>Karty Rare</h2>
-        <div class="card-group">
-            <div *ngFor="let card of rareCards" class="card-item">
-                <img
-                    [src]="'cards/' + card.club + '/' + card.imageUrl + '.png'"
-                    [class.grayscale]="!isOwned(card)"
-                    alt="{{ card.name }}"
-                />
-                <span *ngIf="isOwned(card)">
-                  Znaleziona
-                  {{ getFirstFoundDate(card) }} ({{
-                      getQuantity(card)
-                  }})
-              </span>
+        </mat-expansion-panel>
+    
+        <mat-expansion-panel *ngIf="rareCards.length">
+            <mat-expansion-panel-header>
+                <mat-panel-title> Karty Rare </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="card-group">
+                <div *ngFor="let card of rareCards" class="card-item">
+                    <img
+                        [src]="'cards/' + card.club + '/' + card.imageUrl + '.png'"
+                        [class.grayscale]="!isOwned(card)"
+                        alt="{{ card.name }}"
+                    />
+                    <span *ngIf="isOwned(card)">
+                        Znaleziona
+                        {{ getFirstFoundDate(card) }} ({{ getQuantity(card) }})
+                    </span>
+                </div>
             </div>
-        </div>
-    </section>
-
-    <section *ngIf="epicCards.length">
-        <h2>Karty Epic</h2>
-        <div class="card-group">
-            <div *ngFor="let card of epicCards" class="card-item">
-                <img
-                    [src]="'cards/' + card.club + '/' + card.imageUrl + '.png'"
-                    [class.grayscale]="!isOwned(card)"
-                    alt="{{ card.name }}"
-                />
-                <span *ngIf="isOwned(card)">
-                  Znaleziona
-                  {{ getFirstFoundDate(card) }} ({{
-                      getQuantity(card)
-                  }})
-              </span>
+        </mat-expansion-panel>
+    
+        <mat-expansion-panel *ngIf="epicCards.length">
+            <mat-expansion-panel-header>
+                <mat-panel-title> Karty Epic </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="card-group">
+                <div *ngFor="let card of epicCards" class="card-item">
+                    <img
+                        [src]="'cards/' + card.club + '/' + card.imageUrl + '.png'"
+                        [class.grayscale]="!isOwned(card)"
+                        alt="{{ card.name }}"
+                    />
+                    <span *ngIf="isOwned(card)">
+                        Znaleziona
+                        {{ getFirstFoundDate(card) }} ({{ getQuantity(card) }})
+                    </span>
+                </div>
             </div>
-        </div>
-    </section>
-
-    <section *ngIf="legendaryCards.length">
-        <h2>Karty Legendary</h2>
-        <div class="card-group">
-            <div *ngFor="let card of legendaryCards" class="card-item">
-                <img
-                    [src]="'cards/' + card.club + '/' + card.imageUrl + '.png'"
-                    [class.grayscale]="!isOwned(card)"
-                    alt="{{ card.name }}"
-                />
-                <span *ngIf="isOwned(card)">
-                  Znaleziona
-                  {{ getFirstFoundDate(card) }} ({{
-                      getQuantity(card)
-                  }})
-              </span>
+        </mat-expansion-panel>
+    
+        <mat-expansion-panel *ngIf="legendaryCards.length">
+            <mat-expansion-panel-header>
+                <mat-panel-title> Karty Legendary </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="card-group">
+                <div *ngFor="let card of legendaryCards" class="card-item">
+                    <img
+                        [src]="'cards/' + card.club + '/' + card.imageUrl + '.png'"
+                        [class.grayscale]="!isOwned(card)"
+                        alt="{{ card.name }}"
+                    />
+                    <span *ngIf="isOwned(card)">
+                        Znaleziona
+                        {{ getFirstFoundDate(card) }} ({{ getQuantity(card) }})
+                    </span>
+                </div>
             </div>
-        </div>
-    </section>
+        </mat-expansion-panel>
+    </div>
 </div>
 
-<!-- Widok listy: tabela z danymi o kartach -->
 <div *ngIf="viewMode === 'list'">
     <table>
         <thead>
@@ -94,12 +94,12 @@
                 <th>Narodowość</th>
                 <th>Klub</th>
                 <th>Typ Karty</th>
-                <th>TEM</th>
-                <th>STR</th>
-                <th>POD</th>
-                <th>DRY</th>
-                <th>DEF</th>
-                <th>FIZ</th>
+                <th>TEM/PAR</th>
+                <th>STR/ŁAP</th>
+                <th>POD/WYK</th>
+                <th>DRY/REF</th>
+                <th>DEF/SZB</th>
+                <th>FIZ/UST</th>
                 <th>Czy Znaleziona</th>
             </tr>
         </thead>
@@ -108,7 +108,19 @@
                 <td>{{ card.name }}</td>
                 <td>{{ card.overall }}</td>
                 <td>{{ card.position }}</td>
-                <td>{{ card.nationality }}</td>
+                <td>
+                    <img
+                        *ngIf="getFlagCode(card.nationality); else noFlag"
+                        [src]="
+                            'flags/' + getFlagCode(card.nationality) + '.svg'
+                        "
+                        [alt]="card.nationality"
+                        width="30"
+                    />
+                    <ng-template #noFlag>
+                        <span>{{ card.nationality }}</span>
+                    </ng-template>
+                </td>
                 <td>{{ card.club | clubName }}</td>
                 <td>{{ card.cardType }}</td>
                 <td>{{ card.tem }}</td>
@@ -119,14 +131,11 @@
                 <td>{{ card.fiz }}</td>
                 <td>
                     <span *ngIf="isOwned(card); else notOwned">
-                        <!-- Ikona potwierdzająca, że karta została znaleziona,
-                 data pierwszego znalezienia oraz ilość -->
                         &#10003; {{ getFirstFoundDate(card) }} ({{
                             getQuantity(card)
                         }})
                     </span>
                     <ng-template #notOwned>
-                        <!-- Ikona X, gdy karta nie jest posiadana -->
                         &#10007;
                     </ng-template>
                 </td>

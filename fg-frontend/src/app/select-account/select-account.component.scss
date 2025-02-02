@@ -1,0 +1,108 @@
+// Ogólny kontener strony
+.page-container {
+    width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  // Tytuł strony
+  .title {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    color: #333333;
+    margin-bottom: 20px;
+  }
+  
+  // Kontener listy
+  .list {
+    width: 100%;
+    border-collapse: collapse;
+  
+    // Header tabeli
+    &__header {
+      background-color: #f1f1f1;
+      border-bottom: 2px solid #dddddd;
+      .list__element {
+        display: flex;
+        padding: 10px 0;
+        text-transform: uppercase;
+        font-size: 14px;
+        color: #555555;
+      }
+    }
+  
+    // Wiersze tabeli
+    &__row {
+      display: flex;
+      padding: 10px 0;
+      align-items: center;
+      transition: background-color 0.3s ease;
+      &:hover {
+        background-color: #f9f9f9;
+      }
+    }
+  
+    // Komórki tabeli
+    .list__item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 5px 10px;
+      border-right: 1px solid #eeeeee;
+      text-align: center;
+      &:last-child {
+        border-right: none;
+      }
+  
+      .list__label {
+        font-size: 12px;
+        color: #888888;
+        margin-bottom: 4px;
+      }
+  
+      .list__value {
+        font-size: 16px;
+        font-weight: 500;
+        color: #333333;
+      }
+    }
+  
+    // Informacja o pustej liście
+    &__empty {
+      padding: 20px;
+      text-align: center;
+      .list__empty-text {
+        font-size: 16px;
+        color: #999999;
+      }
+    }
+  }
+  
+  // Stylizacja przycisku
+  button {
+    background-color: #007BFF;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  
+    &:hover {
+      background-color: #0056b3;
+      transform: translateY(-1px);
+    }
+  
+    &:active {
+      transform: translateY(0);
+    }
+  }
+  

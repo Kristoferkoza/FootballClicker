@@ -1,11 +1,45 @@
-<h4>Wybierz konto</h4>
-<mat-form-field>
-  <mat-label>Dostepne konta</mat-label>
-  <mat-select [(ngModel)]="selectedAccount">
-    @for (account of accounts; track account) {
-      <mat-option [value]="account">{{ account.name }} {{ account.surname }}</mat-option>
-    }
-  </mat-select>
-</mat-form-field>
-
-<button mat-raised-button (click)="play()" [disabled]="!selectedAccount">Graj!</button>
+<div class="page-container">
+  <div class="title">Wybierz konto</div>
+  <div class="list">
+      <div class="list__header" *ngIf="accounts.length">
+          <div class="list__element">
+              <div class="list__item name">
+                  <div class="list__label">Imię</div>
+              </div>
+              <div class="list__item surname">
+                  <div class="list__label">Nazwisko</div>
+              </div>
+              <div class="list__item score">
+                  <div class="list__label">Wynik</div>
+              </div>
+              <div class="list__item play">
+                  <div class="list__label">Graj!</div>
+              </div>
+          </div>
+      </div>
+      <div class="list__row" *ngFor="let account of accounts; let i = index">
+          <mat-divider></mat-divider>
+          <div class="list__item name">
+              <div class="list__label">Imię</div>
+              <div class="list__value">{{ account.name }}</div>
+          </div>
+          <div class="list__item surname">
+              <div class="list__label">Nazwisko</div>
+              <div class="list__value">{{ account.surname }}</div>
+          </div>
+          <div class="list__item score">
+              <div class="list__label">Wynik</div>
+              <div class="list__value">{{ account.points }}</div>
+          </div>
+          <div class="list__item play">
+              <div class="list__label">Graj!</div>
+              <div class="list__value">
+                  <button (click)="play(account.id)">Graj!</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="list__empty" *ngIf="!accounts.length">
+      <div class="list__empty-text">Brak użytkowników</div>
+  </div>
+</div>
