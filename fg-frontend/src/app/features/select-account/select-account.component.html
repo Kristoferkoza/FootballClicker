@@ -1,44 +1,57 @@
-<div class="page-container">
-  <div class="title">Wybierz konto</div>
-  <div class="list">
-      <div class="list__header" *ngIf="accounts.length">
-          <div class="list__element">
-              <div class="list__item name">
-                  <div class="list__label">Imię</div>
-              </div>
-              <div class="list__item surname">
-                  <div class="list__label">Nazwisko</div>
-              </div>
-              <div class="list__item score">
-                  <div class="list__label">Wynik</div>
-              </div>
-              <div class="list__item play">
-                  <div class="list__label">Graj!</div>
-              </div>
-          </div>
-      </div>
-      <div class="list__row" *ngFor="let account of accounts; let i = index">
-          <mat-divider></mat-divider>
-          <div class="list__item name">
-              <div class="list__label">Imię</div>
-              <div class="list__value">{{ account.name }}</div>
-          </div>
-          <div class="list__item surname">
-              <div class="list__label">Nazwisko</div>
-              <div class="list__value">{{ account.surname }}</div>
-          </div>
-          <div class="list__item score">
-              <div class="list__label">Wynik</div>
-              <div class="list__value">{{ account.points }}</div>
-          </div>
-          <div class="list__item play">
-              <div class="list__value">
-                  <button (click)="play(account.id)">Graj!</button>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="list__empty" *ngIf="!accounts.length">
-      <div class="list__empty-text">Brak użytkowników</div>
-  </div>
+<div *ngIf="this.loading" class="loading-stage">
+    <mat-spinner></mat-spinner>
+    <p>Ładowanie...</p>
 </div>
+
+<div *ngIf="!this.loading" class="page-container">
+    <h1 class="title">Wybierz konto</h1>
+    
+    <div class="accounts-container">
+      <div class="account-card" *ngFor="let account of accounts" @cardAnimation>
+        <div class="account-info">
+          <div class="avatar">{{ account.name[0] }}{{ account.surname[0] }}</div>
+          <div class="details">
+            <h2 class="name">{{ account.name }} {{ account.surname }}</h2>
+            <div class="score">
+              <span class="label">Wynik:</span>
+              <span class="value">{{ account.points }}</span>
+            </div>
+          </div>
+        </div>
+        <button class="play-button" (click)="play(account.id)">
+          <span>Rozpocznij grę</span>
+          <svg class="arrow-icon" viewBox="0 0 24 24">
+            <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="account-card new-user-card" @cardAnimation>
+        <div class="account-info">
+          <div class="avatar new-user-avatar">
+            <svg class="add-user-icon" viewBox="0 0 24 24">
+              <path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+          </div>
+          <div class="details">
+            <h2 class="name new-user-title">Dodaj nowe konto</h2>
+            <div class="score">
+              <span class="label new-user-subtitle">Kliknij, aby założyć nowego użytkownika</span>
+            </div>
+          </div>
+        </div>
+        <button class="add-button" (click)="navigateToAddUser()">
+          <span>Utwórz</span>
+          <svg class="add-icon" viewBox="0 0 24 24">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+          </svg>
+        </button>
+      </div>
+  
+      <div class="empty-state" *ngIf="!accounts.length" @fadeIn>
+        <div class="empty-icon">👤</div>
+        <h3>Brak dostępnych kont</h3>
+        <p>Dodaj nowe konto, aby rozpocząć grę</p>
+      </div>
+    </div>
+  </div>

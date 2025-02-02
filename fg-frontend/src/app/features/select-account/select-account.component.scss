@@ -1,108 +1,259 @@
-// Ogólny kontener strony
+@import '../../shared/styles/variables';
+
 .page-container {
-    width: 900px;
-    margin: 30px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    font-family: 'Roboto', sans-serif;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.title {
+  text-align: center;
+  color: $accent;
+  font-size: 2.5rem;
+  margin-bottom: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.loading-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  
+  p {
+    color: $primary;
+    font-size: 1.5rem;
+    font-weight: 500;
+    animation: pulse 1.5s infinite;
   }
+}
+
+.accounts-container {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.account-card {
+  cursor: pointer;
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  gap: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   
-  // Tytuł strony
-  .title {
-    font-size: 28px;
-    font-weight: bold;
-    text-align: center;
-    color: #333333;
-    margin-bottom: 20px;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
   }
-  
-  // Kontener listy
-  .list {
-    width: 100%;
-    border-collapse: collapse;
-  
-    // Header tabeli
-    &__header {
-      background-color: #f1f1f1;
-      border-bottom: 2px solid #dddddd;
-      .list__element {
-        display: flex;
-        padding: 10px 0;
-        text-transform: uppercase;
-        font-size: 14px;
-        color: #555555;
-      }
-    }
-  
-    // Wiersze tabeli
-    &__row {
-      display: flex;
-      padding: 10px 0;
-      align-items: center;
-      transition: background-color 0.3s ease;
-      &:hover {
-        background-color: #f9f9f9;
-      }
-    }
-  
-    // Komórki tabeli
-    .list__item {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 5px 10px;
-      border-right: 1px solid #eeeeee;
-      text-align: center;
-      &:last-child {
-        border-right: none;
-      }
-  
-      .list__label {
-        font-size: 12px;
-        color: #888888;
-        margin-bottom: 4px;
-      }
-  
-      .list__value {
-        font-size: 16px;
-        font-weight: 500;
-        color: #333333;
-      }
-    }
-  
-    // Informacja o pustej liście
-    &__empty {
-      padding: 20px;
-      text-align: center;
-      .list__empty-text {
-        font-size: 16px;
-        color: #999999;
-      }
-    }
+}
+
+.account-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: $primary;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.details {
+  .name {
+    color: $font-dark;
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
   }
-  
-  // Stylizacja przycisku
-  button {
-    background-color: #007BFF;
-    color: #ffffff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  
-    &:hover {
-      background-color: #0056b3;
-      transform: translateY(-1px);
+
+  .score {
+    margin-top: 0.5rem;
+    
+    .label {
+      color: $secondary;
+      font-size: 0.9rem;
     }
-  
-    &:active {
-      transform: translateY(0);
+    
+    .value {
+      color: $accent;
+      font-weight: 700;
+      margin-left: 0.5rem;
     }
   }
+}
+
+.play-button {
+  background: $primary;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
   
+  &:hover {
+    background: darken($primary, 8%);
+    transform: translateX(4px);
+    
+    .arrow-icon {
+      transform: translateX(2px);
+    }
+  }
+  
+  .arrow-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transition: transform 0.2s ease;
+  }
+}
+
+.new-user-card {
+  background: rgba($primary, 0.05);
+  border: 2px dashed rgba($primary, 0.3);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: 'NOWY';
+    position: absolute;
+    top: 10px;
+    right: -30px;
+    background: $primary;
+    color: white;
+    padding: 4px 35px;
+    transform: rotate(45deg);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  &:hover {
+    background: rgba($primary, 0.08);
+    transform: translateY(-2px);
+    
+    .add-user-icon {
+      transform: scale(1.1);
+    }
+    
+    .add-button {
+      background: $primary;
+      
+      span {
+        color: white;
+      }
+      
+      .add-icon {
+        fill: white;
+      }
+    }
+  }
+}
+
+.new-user-avatar {
+  background: rgba($primary, 0.1) !important;
+  border: 2px solid rgba($primary, 0.2);
+  
+  .add-user-icon {
+    width: 32px;
+    height: 32px;
+    fill: $primary;
+    transition: transform 0.3s ease;
+  }
+}
+
+.new-user-title {
+  color: $primary !important;
+  font-weight: 700 !important;
+}
+
+.new-user-subtitle {
+  color: rgba($primary, 0.8) !important;
+  font-size: 0.9rem !important;
+}
+
+.add-button {
+  background: rgba($primary, 0.1);
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  
+  span {
+    color: $primary;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+  
+  .add-icon {
+    width: 20px;
+    height: 20px;
+    fill: $primary;
+    transition: fill 0.3s ease;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: rgba($background, 0.5);
+  border-radius: 16px;
+  
+  .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  h3 {
+    color: $accent;
+    margin-bottom: 0.5rem;
+  }
+  
+  p {
+    color: $secondary;
+    margin: 0;
+  }
+}
+
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cardAnimation {
+  animation: cardEntrance 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fadeIn {
+  animation: fadeIn 0.3s ease-in forwards;
+}
