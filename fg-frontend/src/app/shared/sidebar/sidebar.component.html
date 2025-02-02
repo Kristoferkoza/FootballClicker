@@ -32,15 +32,20 @@
             <div class="sidebar__item__text">Ustawienia</div>
         </div>
     </div>
-    <div class="sidebar__account" (click)="navigateTo('user')">
-        <div class="sidebar__account__photo">
-            <img src="user.png" alt=".">
-        </div>
-        <div class="sidebar__account__name">
-            {{selectedUser.name}} {{selectedUser.surname}}
-        </div>
-        <div class="sidebar__account__icon">
-            <img src="icons/edit.svg" alt=".">
+    <div class="sidebar__footer">
+        <div class="sidebar__account" (click)="navigateTo('user')">
+            <div class="sidebar__account__photo">
+                <img src="user.png" alt=".">
+            </div>
+            <div class="sidebar__account__info">
+                <div class="sidebar__account__name">
+                    {{selectedUser.name}} {{selectedUser.surname}}
+                </div>
+                <div class="sidebar__account__status">Punkty: {{selectedUser.points}}</div>
+            </div>
+            <div class="sidebar__account__icon">
+                <img src="icons/edit.svg" alt=".">
+            </div>
         </div>
     </div>
 </div>
