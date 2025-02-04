@@ -1,0 +1,42 @@
+<div class="create-account-container">
+    <div class="form-card">
+      <h1 class="form-title">Utwórz nowe konto</h1>
+      
+      <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="firstName">Imię</label>
+          <input 
+            type="text" 
+            id="firstName" 
+            formControlName="firstName"
+            [class.invalid]="firstName.invalid && (firstName.dirty || firstName.touched)">
+          <div class="validation-error" *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+            <span *ngIf="firstName.errors?.['required']">To pole jest wymagane</span>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="lastName">Nazwisko</label>
+          <input 
+            type="text" 
+            id="lastName" 
+            formControlName="lastName"
+            [class.invalid]="lastName.invalid && (lastName.dirty || lastName.touched)">
+          <div class="validation-error" *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+            <span *ngIf="lastName.errors?.['required']">To pole jest wymagane</span>
+          </div>
+        </div>
+  
+        <div class="form-actions">
+          <button 
+            type="button" 
+            class="cancel-btn"
+            (click)="navigateBack()">Anuluj</button>
+          <button 
+            type="submit" 
+            class="submit-btn"
+            [disabled]="createForm.invalid">Utwórz konto</button>
+        </div>
+      </form>
+    </div>
+  </div>

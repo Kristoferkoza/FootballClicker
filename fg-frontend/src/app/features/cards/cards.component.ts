@@ -22,13 +22,9 @@ import { FlagiKrajow } from '../../_enums/flags.enum';
 export class CardsComponent implements OnInit {
   
   viewMode: 'grid' | 'list' = 'grid';
-
   selectedUserId: string = '';
-  
   allCards: Card[] = [];
-  
   userCards: UserCards[] = [];
-  
   ownedCardsMap: { [cardId: string]: UserCards } = {};
 
   constructor(

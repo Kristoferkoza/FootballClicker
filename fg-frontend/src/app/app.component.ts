@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.router.events.subscribe(() => {
       const currentRouteUrl = this.router.url;
-      const urlWithoutMenu = ['/select-account'];
+      const urlWithoutMenu = ['/select-account', '/create-account'];
       this.showMenu = true;
       urlWithoutMenu.forEach(url => {
         if (currentRouteUrl.includes(url)) {

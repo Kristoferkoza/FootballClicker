@@ -6,6 +6,7 @@ import { CardsComponent } from './features/cards/cards.component';
 import { PacksComponent } from './features/packs/packs.component';
 import { ShopComponent } from './shop/shop.component';
 import { SettingsComponent } from './features/settings/settings.component';
+import { CreateAccountComponent } from './features/create-account/create-account.component';
 
 export const routes: Routes = [
     {
@@ -15,6 +16,10 @@ export const routes: Routes = [
     {
         path: 'select-account',
         component: SelectAccountComponent,
+    },
+    {
+        path: 'create-account',
+        component: CreateAccountComponent,
     },
     {
         path: 'cards',

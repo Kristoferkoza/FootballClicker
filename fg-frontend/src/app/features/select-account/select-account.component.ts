@@ -54,6 +54,6 @@ export class SelectAccountComponent implements OnInit {
   }
 
   navigateToAddUser () {
-    
+    this.router.navigate(['/create-account']);
   }
 }

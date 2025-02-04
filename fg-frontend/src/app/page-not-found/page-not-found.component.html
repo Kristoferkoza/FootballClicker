@@ -1,8 +1,10 @@
 <div class="page-container">
     <div class="page-content">
-        <h1>404</h1>
-        <h3>Page not found</h3>
-        <p>Strona, której szukasz nie istnieje</p>
-        <button (click)="goStart()" mat-raised-button>Idź na start</button>
+        <h1 class="error-code animate__animated animate__shakeX">404</h1>
+        <h3 class="error-title">Page not found</h3>
+        <p class="error-message">Strona, której szukasz nie istnieje</p>
+        <button (click)="goStart()" mat-raised-button class="home-button">
+            <span>Idź na start</span>
+        </button>
     </div>
 </div>
