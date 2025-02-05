@@ -37,7 +37,7 @@ export class UserCardsService {
         user,
         card,
         quantity: 1,
-        firstFoundDate: Date.now(),
+        firstFoundDate: new Date().toISOString(),
       });
       await this.userCardRepository.save(userCard);
     }
