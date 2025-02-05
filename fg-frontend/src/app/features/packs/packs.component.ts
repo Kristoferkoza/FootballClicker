@@ -7,6 +7,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PacksService } from '../../_services/packs/packs.service';
 import { Pack } from '../../_models/packs/pack.model';
 import { CardsService } from '../../_services/cards/cards.service';
+import { MatDialog } from '@angular/material/dialog';
+import { forkJoin, map } from 'rxjs';
+import { PacksDialogComponent } from '../packs-dialog/packs-dialog.component';
 
 @Component({
     selector: 'app-packs',
@@ -26,6 +29,7 @@ export class PacksComponent implements OnInit {
         private usersService: UsersService,
         private packsService: PacksService,
         private cardsService: CardsService,
+        private dialog: MatDialog
     ) {}
 
     ngOnInit() {
@@ -52,34 +56,63 @@ export class PacksComponent implements OnInit {
     }
 
     buyPack(pack: Pack) {
-        let droppedCardsIds: any[] = []
+        const chosenCardIds = new Set<number>();
+        const cardObservables = [];
+
         for (let i = 0; i < pack.number_of_cards; i++) {
             const random = Math.floor(Math.random() * 100) + 1;
-            let threshold = 0;
-            let cardType: string;
+            const cardType = this.determineCardType(random, pack);
 
-            if (random <= (threshold += pack.common_probability)) {
-                cardType = 'common';
-            } else if (random <= (threshold += pack.rare_probability)) {
-                cardType = 'rare';
-            } else if (random <= (threshold += pack.epic_probability)) {
-                cardType = 'epic';
-            } else {
-                cardType = 'legendary';
-            }
+            const cardObservable = this.cardsService
+                .findAllIdsByType(cardType)
+                .pipe(
+                    map((cardsIds) => {
+                        // Filtrujemy już wybrane identyfikatory, aby nie powtórzyć karty
+                        const availableCards = cardsIds.filter(
+                            (id) => !chosenCardIds.has(id)
+                        );
 
-            let cardsOfTypeIds = []
-            this.cardsService.findAllIdsByType(cardType).subscribe(cardsIds => {
-                cardsOfTypeIds = cardsIds
-                let randomCardId = cardsIds[Math.floor(Math.random() * cardsIds.length)];
-                while (droppedCardsIds.includes(randomCardId)) {
-                    randomCardId = cardsIds[Math.floor(Math.random() * cardsIds.length)];
-                }
-                droppedCardsIds.push(randomCardId)
-              });
-              
-            console.log(`Wylosowana liczba: ${random} => ${cardType}`);
+                        if (availableCards.length === 0) {
+                            throw new Error(
+                                `Brak dostępnych kart dla typu ${cardType} po uwzględnieniu już wybranych.`
+                            );
+                        }
+
+                        const randomIndex = Math.floor(
+                            Math.random() * availableCards.length
+                        );
+                        const selectedId = availableCards[randomIndex];
+
+                        // Dodajemy wybrany identyfikator do zbioru, aby zapobiec duplikatom
+                        chosenCardIds.add(selectedId);
+                        return selectedId;
+                    })
+                );
+
+            cardObservables.push(cardObservable);
         }
-        console.log('Id kart wylosowanych:', droppedCardsIds);
+
+        forkJoin(cardObservables).subscribe({
+            next: (droppedCardsIds) => {
+                this.dialog.open(PacksDialogComponent, {
+                    data: { cardsIds: droppedCardsIds },
+                    width: '90%',
+                    maxWidth: '800px',
+                    panelClass: 'cards-modal',
+                });
+            },
+            error: (err) => console.error('Error buying pack:', err),
+        });
+    }
+
+    private determineCardType(random: number, pack: Pack): string {
+        let threshold = 0;
+        threshold += pack.common_probability;
+        if (random <= threshold) return 'common';
+        threshold += pack.rare_probability;
+        if (random <= threshold) return 'rare';
+        threshold += pack.epic_probability;
+        if (random <= threshold) return 'epic';
+        return 'legendary';
     }
 }
