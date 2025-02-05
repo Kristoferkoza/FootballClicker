@@ -68,10 +68,10 @@
     font-weight: bold;
     text-transform: uppercase;
 
-    &.common { color: $secondary; }
-    &.rare { color: $primary; }
-    &.epic { color: $accent; }
-    &.legendary { color: #ffd700; }
+    &.common { color: $common; }
+    &.rare { color: $rare; }
+    &.epic { color: $epic; }
+    &.legendary { color: $legendary; }
 }
 
 .close-button {

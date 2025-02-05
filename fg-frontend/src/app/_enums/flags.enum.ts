@@ -30,6 +30,7 @@ export enum FlagiKrajow {
     Chile = "cl",
     Chiny = "cn",
     Chorwacja = "hr",
+    Curacao = "cw",
     Cypr = "cy",
     Czechy = "cz",
     Dania = "dk",

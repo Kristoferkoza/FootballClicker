@@ -10,12 +10,14 @@ import { CardsService } from '../../_services/cards/cards.service';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin, map } from 'rxjs';
 import { PacksDialogComponent } from '../packs-dialog/packs-dialog.component';
+import { GameService } from '../../_services/game/game.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-packs',
     standalone: true,
     imports: [CommonModule, HttpClientModule, MatProgressSpinnerModule],
-    providers: [UsersService, PacksService, CardsService],
+    providers: [UsersService, PacksService, CardsService, GameService],
     templateUrl: './packs.component.html',
     styleUrl: './packs.component.scss',
 })
@@ -29,7 +31,9 @@ export class PacksComponent implements OnInit {
         private usersService: UsersService,
         private packsService: PacksService,
         private cardsService: CardsService,
-        private dialog: MatDialog
+        private gameService: GameService,
+        private dialog: MatDialog,
+        private snackBar: MatSnackBar,
     ) {}
 
     ngOnInit() {
@@ -56,53 +60,59 @@ export class PacksComponent implements OnInit {
     }
 
     buyPack(pack: Pack) {
-        const chosenCardIds = new Set<number>();
-        const cardObservables = [];
+        let userPoints = this.gameService.getCounter()!
+        if (userPoints >= pack.cost) {
+            this.gameService.setCounter(userPoints-pack.cost)
+            const chosenCardIds = new Set<number>();
+            const cardObservables = [];
 
-        for (let i = 0; i < pack.number_of_cards; i++) {
-            const random = Math.floor(Math.random() * 100) + 1;
-            const cardType = this.determineCardType(random, pack);
+            for (let i = 0; i < pack.number_of_cards; i++) {
+                const random = Math.floor(Math.random() * 100) + 1;
+                const cardType = this.determineCardType(random, pack);
 
-            const cardObservable = this.cardsService
-                .findAllIdsByType(cardType)
-                .pipe(
-                    map((cardsIds) => {
-                        // Filtrujemy już wybrane identyfikatory, aby nie powtórzyć karty
-                        const availableCards = cardsIds.filter(
-                            (id) => !chosenCardIds.has(id)
-                        );
-
-                        if (availableCards.length === 0) {
-                            throw new Error(
-                                `Brak dostępnych kart dla typu ${cardType} po uwzględnieniu już wybranych.`
+                const cardObservable = this.cardsService
+                    .findAllIdsByType(cardType)
+                    .pipe(
+                        map((cardsIds) => {
+                            const availableCards = cardsIds.filter(
+                                (id) => !chosenCardIds.has(id)
                             );
-                        }
 
-                        const randomIndex = Math.floor(
-                            Math.random() * availableCards.length
-                        );
-                        const selectedId = availableCards[randomIndex];
+                            if (availableCards.length === 0) {
+                                throw new Error(
+                                    `Brak dostępnych kart dla typu ${cardType} po uwzględnieniu już wybranych.`
+                                );
+                            }
 
-                        // Dodajemy wybrany identyfikator do zbioru, aby zapobiec duplikatom
-                        chosenCardIds.add(selectedId);
-                        return selectedId;
-                    })
-                );
+                            const randomIndex = Math.floor(
+                                Math.random() * availableCards.length
+                            );
+                            const selectedId = availableCards[randomIndex];
 
-            cardObservables.push(cardObservable);
+                            chosenCardIds.add(selectedId);
+                            return selectedId;
+                        })
+                    );
+
+                cardObservables.push(cardObservable);
+            }
+
+            forkJoin(cardObservables).subscribe({
+                next: (droppedCardsIds) => {
+                    this.dialog.open(PacksDialogComponent, {
+                        data: { cardsIds: droppedCardsIds },
+                        width: '90%',
+                        maxWidth: '800px',
+                        panelClass: 'cards-modal',
+                    });
+                },
+                error: (err) => console.error('Error buying pack:', err),
+            });
+        } else {
+            this.snackBar.open(`Brakuje ${pack.cost-userPoints} punktów, żeby kupić paczkę.`, 'Zamknij', {
+                duration: 5000,
+            });
         }
-
-        forkJoin(cardObservables).subscribe({
-            next: (droppedCardsIds) => {
-                this.dialog.open(PacksDialogComponent, {
-                    data: { cardsIds: droppedCardsIds },
-                    width: '90%',
-                    maxWidth: '800px',
-                    panelClass: 'cards-modal',
-                });
-            },
-            error: (err) => console.error('Error buying pack:', err),
-        });
     }
 
     private determineCardType(random: number, pack: Pack): string {
