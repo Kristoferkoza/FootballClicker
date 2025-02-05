@@ -12,7 +12,8 @@ export class UserCardsService {
 
   constructor(private http: HttpClient) { }
 
-  addCard(userId: string, cardId: string): Observable<UserCards> {
+  addCard(userId: string, cardId: string) {
+    console.log("Frontend User-CardsService")
     const url = `${this.apiUrl}/${userId}/${cardId}`;
     return this.http.post<UserCards>(url, {});
   }

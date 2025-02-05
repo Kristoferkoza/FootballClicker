@@ -10,7 +10,7 @@ export class UserCardsController {
   async addCard(
     @Param('userId') userId: string,
     @Param('cardId') cardId: string,
-  ): Promise<UserCard> {
+  ) {
     return this.userCardsService.addCardToUser(userId, cardId);
   }
 

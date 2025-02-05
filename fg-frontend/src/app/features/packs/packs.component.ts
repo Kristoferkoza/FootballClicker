@@ -12,12 +12,13 @@ import { forkJoin, map } from 'rxjs';
 import { PacksDialogComponent } from '../packs-dialog/packs-dialog.component';
 import { GameService } from '../../_services/game/game.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserCardsService } from '../../_services/usercard/user-cards.service';
 
 @Component({
     selector: 'app-packs',
     standalone: true,
     imports: [CommonModule, HttpClientModule, MatProgressSpinnerModule],
-    providers: [UsersService, PacksService, CardsService, GameService],
+    providers: [UsersService, PacksService, CardsService, GameService, UserCardsService],
     templateUrl: './packs.component.html',
     styleUrl: './packs.component.scss',
 })
@@ -32,6 +33,7 @@ export class PacksComponent implements OnInit {
         private packsService: PacksService,
         private cardsService: CardsService,
         private gameService: GameService,
+        private userCardsService: UserCardsService,
         private dialog: MatDialog,
         private snackBar: MatSnackBar,
     ) {}
@@ -99,15 +101,28 @@ export class PacksComponent implements OnInit {
 
             forkJoin(cardObservables).subscribe({
                 next: (droppedCardsIds) => {
-                    this.dialog.open(PacksDialogComponent, {
+                  const addCardObservables = droppedCardsIds.map((cardId) => {
+                    console.log("Pack component");
+                    return this.userCardsService.addCard(this.usersService.getSelectedAccountId()!, cardId);
+                  });
+                  
+                  forkJoin(addCardObservables).subscribe({
+                    next: (results) => {
+                      console.log("Wszystkie karty zostały dodane:", results);
+                      this.dialog.open(PacksDialogComponent, {
                         data: { cardsIds: droppedCardsIds },
                         width: '90%',
                         maxWidth: '800px',
                         panelClass: 'cards-modal',
-                    });
+                      });
+                    },
+                    error: (error) => console.error('Błąd przy dodawaniu kart:', error)
+                  });
                 },
                 error: (err) => console.error('Error buying pack:', err),
-            });
+              });
+              
+
         } else {
             this.snackBar.open(`Brakuje ${pack.cost-userPoints} punktów, żeby kupić paczkę.`, 'Zamknij', {
                 duration: 5000,

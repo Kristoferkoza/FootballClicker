@@ -16,13 +16,15 @@ export class UserCardsService {
     private readonly cardRepository: Repository<Card>,
   ) {}
 
-  async addCardToUser(userId: string, cardId: string): Promise<UserCard> {
+  async addCardToUser(userId: string, cardId: string) {
     const user = await this.userRepository.findOne({ where: { id: userId } });
     const card = await this.cardRepository.findOne({ where: { id: cardId } });
 
     if (!user || !card) {
       throw new Error('Nie znaleziono użytkownika lub karty');
     }
+
+    console.log("Backend User-CardsService");
 
     let userCard = await this.userCardRepository.findOne({
       where: { user: { id: userId }, card: { id: cardId } },
@@ -36,11 +38,11 @@ export class UserCardsService {
         user,
         card,
         quantity: 1,
+        firstFoundDate: Date.now(),
       });
       await this.userCardRepository.save(userCard);
     }
 
-    return userCard;
   }
 
   async getUserCards(userId: string): Promise<UserCard[]> {
