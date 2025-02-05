@@ -24,7 +24,6 @@ export class UserCardsService {
       throw new Error('Nie znaleziono użytkownika lub karty');
     }
 
-    console.log("Backend User-CardsService");
 
     let userCard = await this.userCardRepository.findOne({
       where: { user: { id: userId }, card: { id: cardId } },

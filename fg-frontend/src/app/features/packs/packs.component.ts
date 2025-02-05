@@ -102,13 +102,11 @@ export class PacksComponent implements OnInit {
             forkJoin(cardObservables).subscribe({
                 next: (droppedCardsIds) => {
                   const addCardObservables = droppedCardsIds.map((cardId) => {
-                    console.log("Pack component");
                     return this.userCardsService.addCard(this.usersService.getSelectedAccountId()!, cardId);
                   });
                   
                   forkJoin(addCardObservables).subscribe({
-                    next: (results) => {
-                      console.log("Wszystkie karty zostały dodane:", results);
+                    next: () => {
                       this.dialog.open(PacksDialogComponent, {
                         data: { cardsIds: droppedCardsIds },
                         width: '90%',

@@ -7,6 +7,7 @@ import { PacksComponent } from './features/packs/packs.component';
 import { ShopComponent } from './features/shop/shop.component';
 import { SettingsComponent } from './features/settings/settings.component';
 import { CreateAccountComponent } from './features/create-account/create-account.component';
+import { MyPlayerComponent } from './features/my-player/my-player.component';
 
 export const routes: Routes = [
     {
@@ -33,6 +34,10 @@ export const routes: Routes = [
     {
         path: 'packs',
         component: PacksComponent,
+    },
+    {
+        path: 'my-player',
+        component: MyPlayerComponent,
     },
     {
         path: 'settings',
