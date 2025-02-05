@@ -12,7 +12,7 @@ export class UsersService {
     private readonly usersRepository: Repository<User>,
   ) {}
 
-  async findAll() {
+  findAll() {
     return this.usersRepository.find();
   }
 
@@ -24,7 +24,7 @@ export class UsersService {
     return user;
   }
 
-  async create(createUserDto: CreateUserDto) {
+  create(createUserDto: CreateUserDto) {
     const user = this.usersRepository.create(createUserDto);
     return this.usersRepository.save(user);
   }

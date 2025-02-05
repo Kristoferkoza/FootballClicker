@@ -1,1 +1,23 @@
-<p>packs works!</p>
+<div *ngIf="loading" class="loading-stage">
+    <mat-spinner></mat-spinner>
+    <p>Ładowanie...</p>
+</div>
+
+<div *ngIf="!loading" class="page-container">
+    <div class="page-title">Dostępne paczki do kupienia</div>
+    <div class="pack-group">
+        <div class="pack-item" *ngFor="let pack of packs">
+            <img [src]="'packs/' + pack.image_url + '.png'" alt="{{pack.name}}">
+            <div class="pack-name">{{pack.name}}</div>
+            
+            <div class="probability-list">
+                <div class="probability-item" *ngFor="let prob of getProbabilities(pack)">
+                    <span class="label">{{prob.rarity}}</span>
+                    <span class="value">{{prob.value}}%</span>
+                </div>
+            </div>
+
+            <button (click)="buyPack(pack)">Kup za {{ pack.cost }}</button>
+        </div>
+    </div>
+</div>

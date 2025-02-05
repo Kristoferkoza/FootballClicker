@@ -4,7 +4,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SelectAccountComponent } from './features/select-account/select-account.component';
 import { CardsComponent } from './features/cards/cards.component';
 import { PacksComponent } from './features/packs/packs.component';
-import { ShopComponent } from './shop/shop.component';
+import { ShopComponent } from './features/shop/shop.component';
 import { SettingsComponent } from './features/settings/settings.component';
 import { CreateAccountComponent } from './features/create-account/create-account.component';
 

@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { CardsModule } from './cards/cards.module';
 import { UserCardsModule } from './usercard/user-cards.module';
+import { PacksModule } from './packs/packs.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { UserCardsModule } from './usercard/user-cards.module';
     }),
     CardsModule,
     UserCardsModule,
+    PacksModule,
   ],
   controllers: [AppController],
   providers: [AppService],
