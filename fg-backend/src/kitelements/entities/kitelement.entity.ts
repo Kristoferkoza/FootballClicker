@@ -20,5 +20,5 @@ export class KitElement {
   points_given: number;
 
   @Column()
-  cost: number
+  cost: number;
 }
