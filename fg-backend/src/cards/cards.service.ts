@@ -25,7 +25,7 @@ export class CardsService {
     return card;
   }
 
-  async create(createCardDto: CreateCardDto) {
+  create(createCardDto: CreateCardDto) {
     const card = this.cardsRepository.create(createCardDto);
     return this.cardsRepository.save(card);
   }

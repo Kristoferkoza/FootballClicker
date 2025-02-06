@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CardsModule } from './cards/cards.module';
 import { UserCardsModule } from './usercard/user-cards.module';
 import { PacksModule } from './packs/packs.module';
+import { KitElementsModule } from './kitelements/kitelements.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { PacksModule } from './packs/packs.module';
     CardsModule,
     UserCardsModule,
     PacksModule,
+    KitElementsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

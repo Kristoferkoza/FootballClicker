@@ -26,7 +26,6 @@ export const routes: Routes = [
         path: 'cards',
         component: CardsComponent,
     },
-    
     {
         path: 'shop',
         component: ShopComponent,
