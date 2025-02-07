@@ -10,12 +10,14 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { UserKitElementsService } from '../../_services/userkitelement/user-kitelements.service';
+import { UsersService } from '../../_services/users/users.service';
 
 @Component({
   selector: 'app-my-player',
   standalone: true,
   imports: [CommonModule, HttpClientModule, MatProgressSpinnerModule, MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule],
-  providers: [KitElementsService],
+  providers: [KitElementsService, UserKitElementsService, UsersService],
   animations: [
     trigger('fadeIn', [
       transition(':enter', [
@@ -42,18 +44,30 @@ export class MyPlayerComponent implements OnInit {
 
   constructor (
     private kitElementsService: KitElementsService,
+    private userKitElementsService: UserKitElementsService,
+    private usersService: UsersService,
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
-    this.kitElementsService.findAll().subscribe(
-      (kitElements: any) => {
-        
-        this.boots = kitElements.filter((element: KitElement) => element.kit_part === KitPart.BOOTS);
-        this.socks = kitElements.filter((element: KitElement) => element.kit_part === KitPart.SOCKS);
-        this.shorts = kitElements.filter((element: KitElement) => element.kit_part === KitPart.SHORTS);
-        this.tshirts = kitElements.filter((element: KitElement) => element.kit_part === KitPart.TSHIRT);
-
+    this.userKitElementsService.getUserKitElements(this.usersService.getSelectedAccountId()!).subscribe(
+      (data: any[]) => {  
+        this.boots = data
+          .filter(item => item.kitElement && item.kitElement.kit_part === KitPart.BOOTS)
+          .map(item => item.kitElement);
+  
+        this.socks = data
+          .filter(item => item.kitElement && item.kitElement.kit_part === KitPart.SOCKS)
+          .map(item => item.kitElement);
+  
+        this.shorts = data
+          .filter(item => item.kitElement && item.kitElement.kit_part === KitPart.SHORTS)
+          .map(item => item.kitElement);
+  
+        this.tshirts = data
+          .filter(item => item.kitElement && item.kitElement.kit_part === KitPart.TSHIRT)
+          .map(item => item.kitElement);
+  
         this.loading = false;
       },
       error => {
@@ -62,4 +76,6 @@ export class MyPlayerComponent implements OnInit {
       }
     );
   }
+  
+  
 }

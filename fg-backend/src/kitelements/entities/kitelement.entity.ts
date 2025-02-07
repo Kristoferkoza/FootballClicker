@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { KitPart } from '../enums/kit-part.enum';
 import { KitType } from '../enums/kit-type.enum';
+import { UserKitElement } from 'src/userkitelement/entities/user-kitelement.entity';
 
 @Entity('kit-elements')
 export class KitElement {
@@ -24,4 +25,7 @@ export class KitElement {
 
   @Column()
   image_url: string;
+
+  @OneToMany(() => UserKitElement, (userKitElement) => userKitElement.kitElement, { cascade: true })
+  userKitElements: UserKitElement[];
 }
