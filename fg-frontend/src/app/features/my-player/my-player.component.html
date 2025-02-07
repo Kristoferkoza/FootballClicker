@@ -4,93 +4,187 @@
 </div>
 
 <div *ngIf="!this.loading" class="page-container">
-    <div class="page-title">Twój Zawodnik</div>
+    <h1 class="page-title">Twój Zawodnik</h1>
     <div class="page-content">
         <div class="player-photo">
-            <img src="kit_elements/player.png" alt="." />
+            <img
+                src="kit_elements/player.png"
+                alt="Zawodnik"
+                class="player-image"
+            />
         </div>
+
         <div class="selection-cards">
-            <div class="selection-card">
-              <div class="selection-card__title">
-                Wybierz Koszulkę
-              </div>
-              <div class="selection-card__selected">
-                {{selectedTshirt?.name}}
-              </div>
-              <div class="selection-card__image">
-                <mat-form-field>
-                  <mat-label>Wybierz Koszulkę</mat-label>
-                  <mat-select [(value)]="selectedTshirt">
-                    @for (tshirt of tshirts; track tshirt) {
-                      <mat-option>None</mat-option>
-                      <mat-option [value]="tshirt">{{tshirt.name}}</mat-option>
-                    }
-                  </mat-select>
+            <div class="selection-card" @fadeIn>
+                <div class="selection-card-header">
+                    <h2 class="selection-card__title">Koszulka</h2>
+                    <div class="selection-card__selected">
+                        <img
+                            *ngIf="selectedTshirt"
+                            [src]="
+                                'kit_elements/' +
+                                selectedTshirt.image_url +
+                                '.png'
+                            "
+                            class="selected-image"
+                        />
+                        <div *ngIf="!selectedTshirt" class="placeholder">
+                            Wybierz koszulkę
+                        </div>
+                    </div>
+                </div>
+                <mat-form-field class="selection-card__input">
+                    <mat-select
+                        [(value)]="selectedTshirt"
+                        panelClass="custom-panel"
+                    >
+                        <mat-option [value]="null">Brak</mat-option>
+                        @for (tshirt of tshirts; track tshirt) {
+                        <mat-option [value]="tshirt">
+                            <div class="option-content">
+                                <img
+                                    [src]="
+                                        'kit_elements/' +
+                                        tshirt.image_url +
+                                        '.png'
+                                    "
+                                    class="option-image"
+                                />
+                                <span>{{ tshirt.name }}</span>
+                            </div>
+                        </mat-option>
+                        }
+                    </mat-select>
                 </mat-form-field>
-              </div>            
             </div>
 
-
-            <div class="selection-card">
-              <div class="selection-card__title">
-                Wybierz Spodenki
-              </div>
-              <div class="selection-card__selected">
-                {{selectedShort?.name}}
-              </div>
-              <div class="selection-card__image">
-                <mat-form-field>
-                  <mat-label>Wybierz Spodenki</mat-label>
-                  <mat-select [(value)]="selectedShort">
-                    <mat-option>None</mat-option>
-                    @for (short of shorts; track short) {
-                      <mat-option [value]="short">{{short.name}}</mat-option>
-                    }
-                  </mat-select>
+            <div class="selection-card" @fadeIn>
+                <div class="selection-card-header">
+                    <h2 class="selection-card__title">Spodenki</h2>
+                    <div class="selection-card__selected">
+                        <img
+                            *ngIf="selectedShort"
+                            [src]="
+                                'kit_elements/' +
+                                selectedShort.image_url +
+                                '.png'
+                            "
+                            class="selected-image"
+                        />
+                        <div *ngIf="!selectedShort" class="placeholder">
+                            Wybierz spodenki
+                        </div>
+                    </div>
+                </div>
+                <mat-form-field class="selection-card__input">
+                    <mat-select
+                        [(value)]="selectedShort"
+                        panelClass="custom-panel"
+                    >
+                        <mat-option [value]="null">Brak</mat-option>
+                        @for (short of shorts; track short) {
+                        <mat-option [value]="short">
+                            <div class="option-content">
+                                <img
+                                    [src]="
+                                        'kit_elements/' +
+                                        short.image_url +
+                                        '.png'
+                                    "
+                                    class="option-image"
+                                />
+                                <span>{{ short.name }}</span>
+                            </div>
+                        </mat-option>
+                        }
+                    </mat-select>
                 </mat-form-field>
-              </div>
             </div>
 
-
-            <div class="selection-card">
-              <div class="selection-card__title">
-                Wybierz Getry
-              </div>
-              <div class="selection-card__selected">
-                {{selectedSock?.name}}
-              </div>
-              <div class="selection-card__image">
-                <mat-form-field>
-                  <mat-label>Wybierz Getry</mat-label>
-                  <mat-select [(value)]="selectedSock">
-                    <mat-option>None</mat-option>
-                    @for (sock of socks; track sock) {
-                      <mat-option [value]="sock">{{sock.name}}</mat-option>
-                    }
-                  </mat-select>
+            <div class="selection-card" @fadeIn>
+                <div class="selection-card-header">
+                    <h2 class="selection-card__title">Getry</h2>
+                    <div class="selection-card__selected">
+                        <img
+                            *ngIf="selectedSock"
+                            [src]="
+                                'kit_elements/' +
+                                selectedSock.image_url +
+                                '.png'
+                            "
+                            class="selected-image"
+                        />
+                        <div *ngIf="!selectedSock" class="placeholder">
+                            Wybierz getry
+                        </div>
+                    </div>
+                </div>
+                <mat-form-field class="selection-card__input">
+                    <mat-select
+                        [(value)]="selectedSock"
+                        panelClass="custom-panel"
+                    >
+                        <mat-option [value]="null">Brak</mat-option>
+                        @for (sock of socks; track sock) {
+                        <mat-option [value]="sock">
+                            <div class="option-content">
+                                <img
+                                    [src]="
+                                        'kit_elements/' +
+                                        sock.image_url +
+                                        '.png'
+                                    "
+                                    class="option-image"
+                                />
+                                <span>{{ sock.name }}</span>
+                            </div>
+                        </mat-option>
+                        }
+                    </mat-select>
                 </mat-form-field>
-              </div>
             </div>
 
-            
-            <div class="selection-card">
-              <div class="selection-card__title">
-                Wybierz Buty
-              </div>
-              <div class="selection-card__selected">
-                {{selectedBoot?.name}}
-              </div>
-              <div class="selection-card__image">
-                <mat-form-field>
-                  <mat-label>Wybierz Korki</mat-label>
-                  <mat-select [(value)]="selectedBoot">
-                    <mat-option>None</mat-option>
-                    @for (boot of boots; track boot) {
-                      <mat-option [value]="boot">{{boot.name}}</mat-option>
-                    }
-                  </mat-select>
+            <div class="selection-card" @fadeIn>
+                <div class="selection-card-header">
+                    <h2 class="selection-card__title">Korki</h2>
+                    <div class="selection-card__selected">
+                        <img
+                            *ngIf="selectedBoot"
+                            [src]="
+                                'kit_elements/' +
+                                selectedBoot.image_url +
+                                '.png'
+                            "
+                            class="selected-image"
+                        />
+                        <div *ngIf="!selectedBoot" class="placeholder">
+                            Wybierz korki
+                        </div>
+                    </div>
+                </div>
+                <mat-form-field class="selection-card__input">
+                    <mat-select
+                        [(value)]="selectedBoot"
+                        panelClass="custom-panel"
+                    >
+                        <mat-option [value]="null">Brak</mat-option>
+                        @for (boot of boots; track boot) {
+                        <mat-option [value]="boot">
+                            <div class="option-content">
+                                <img
+                                    [src]="
+                                        'kit_elements/' +
+                                        boot.image_url +
+                                        '.png'
+                                    "
+                                    class="option-image"
+                                />
+                                <span>{{ boot.name }}</span>
+                            </div>
+                        </mat-option>
+                        }
+                    </mat-select>
                 </mat-form-field>
-              </div>
             </div>
         </div>
     </div>

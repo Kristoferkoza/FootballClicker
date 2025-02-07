@@ -9,12 +9,21 @@ import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-my-player',
   standalone: true,
   imports: [CommonModule, HttpClientModule, MatProgressSpinnerModule, MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule],
   providers: [KitElementsService],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(10px)' }),
+        animate('0.3s ease', style({ opacity: 1, transform: 'translateY(0)' }))
+      ])
+    ])
+  ],
   templateUrl: './my-player.component.html',
   styleUrl: './my-player.component.scss'
 })
