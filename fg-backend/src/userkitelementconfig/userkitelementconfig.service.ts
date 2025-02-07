@@ -21,7 +21,7 @@ export class UserKitElementConfigService {
         shortId: null,
         sockId: null,
         bootId: null,
-        bonuses: 0,
+        bonus: 0,
       }
       config = this.create(createUserKitElementConfigDto)
     }

@@ -21,5 +21,5 @@ export class UserKitElementConfig {
   bootId: string | null;
 
   @Column({ type: 'int', default: 0 })
-  bonuses: number;
+  bonus: number;
 }

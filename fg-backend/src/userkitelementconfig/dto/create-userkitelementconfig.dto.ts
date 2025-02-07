@@ -22,5 +22,5 @@ export class CreateUserKitElementConfigDto {
 
   @IsInt()
   @Min(0)
-  bonuses: number;
+  bonus: number;
 }

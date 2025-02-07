@@ -4,5 +4,5 @@ export interface CreateUserKitElementConfig {
     shortId?: string | null;
     sockId?: string | null;
     bootId?: string | null;
-    bonuses: number;
+    bonus: number;
 }
