@@ -12,11 +12,12 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { UserKitElementsService } from '../../_services/userkitelement/user-kitelements.service';
 import { UsersService } from '../../_services/users/users.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-my-player',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, MatProgressSpinnerModule, MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, MatProgressSpinnerModule, MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule, MatButtonModule],
   providers: [KitElementsService, UserKitElementsService, UsersService],
   animations: [
     trigger('fadeIn', [
@@ -76,6 +77,9 @@ export class MyPlayerComponent implements OnInit {
       }
     );
   }
-  
-  
+
+  savePlayer() {
+    console.log(`Player saved: ${this.selectedBoot?.name}, ${this.selectedSock}, ${this.selectedShort}, ${this.selectedTshirt}`);
+    // NOTE: dodać zapisywanie konfiguracji do oddzielnej encji
+  }
 }

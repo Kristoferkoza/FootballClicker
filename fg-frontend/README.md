@@ -8,23 +8,40 @@ Wymyślony system rozgrywek:
 
 Europa:
 - Europa Pro League:
-    Olympique Dijon (Francja)
-    Rotterdam FC (Holandia)
-    Birmingham United (Anglia)
-    Ankara FK (Turcja)
     Roma Calcio (Włochy)
-    Dortmund SC (Niemcy)
     Villaviciosa De Odón (Hiszpania)
+    Birmingham United (Anglia)
+    Olympique Dijon (Francja)
+    Ankara FK (Turcja)
+    CD Amadora (Portugalia)
+    Deportivo Malaga (Hiszpania)
+    Castlefield City (Anglia)
+    Rotterdam FC (Holandia)
+    Dortmund SC (Niemcy)
 
 - Europa Challenger League
+    Ixelles FC (Belgia)
     Drammen FC (Norwegia)
+    Borussia Frankfurt (Niemcy)
     FK Nowy Sad (Serbia)
+    Florence FC (Włochy)
+    Bonnefoy FC (Francja)
     Innsbruck Austria (Austria)
+    Sant Marti (Hiszpania)
+    Neapoli Saloniki (Grecja)
+    Winterthur SC (Szwajcaria)
     
 - Europa Third League
     Timisoara CFR (Rumunia)
     Wisła Warszawa (Polska)
-
+    Vasastaden IF (Szwecja)
+    Zoria Dniepr (Ukraina)
+    Hanevoet Eindhoven (Holandia)
+    HNK Zadar (Chorwacja)
+    Edinburg FC (Szkocja)
+    Prelada SC (Portugalia)
+    San Salvario Turin (Włochy)
+    Harlesden FC (Anglia)
 
 Azja
 - Asian Elite
