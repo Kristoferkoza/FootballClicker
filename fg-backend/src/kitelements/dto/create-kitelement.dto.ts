@@ -17,4 +17,7 @@ export class CreateKitElementDto {
 
   @IsNumber()
   readonly cost: number;
+
+  @IsString()
+  readonly image_url: string;
 }

@@ -1,1 +1,97 @@
-<p>my-player works!</p>
+<div *ngIf="this.loading" class="loading-stage">
+    <mat-spinner></mat-spinner>
+    <p>Ładowanie...</p>
+</div>
+
+<div *ngIf="!this.loading" class="page-container">
+    <div class="page-title">Twój Zawodnik</div>
+    <div class="page-content">
+        <div class="player-photo">
+            <img src="kit_elements/player.png" alt="." />
+        </div>
+        <div class="selection-cards">
+            <div class="selection-card">
+              <div class="selection-card__title">
+                Wybierz Koszulkę
+              </div>
+              <div class="selection-card__selected">
+                {{selectedTshirt?.name}}
+              </div>
+              <div class="selection-card__image">
+                <mat-form-field>
+                  <mat-label>Wybierz Koszulkę</mat-label>
+                  <mat-select [(value)]="selectedTshirt">
+                    @for (tshirt of tshirts; track tshirt) {
+                      <mat-option>None</mat-option>
+                      <mat-option [value]="tshirt">{{tshirt.name}}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>            
+            </div>
+
+
+            <div class="selection-card">
+              <div class="selection-card__title">
+                Wybierz Spodenki
+              </div>
+              <div class="selection-card__selected">
+                {{selectedShort?.name}}
+              </div>
+              <div class="selection-card__image">
+                <mat-form-field>
+                  <mat-label>Wybierz Spodenki</mat-label>
+                  <mat-select [(value)]="selectedShort">
+                    <mat-option>None</mat-option>
+                    @for (short of shorts; track short) {
+                      <mat-option [value]="short">{{short.name}}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+
+            <div class="selection-card">
+              <div class="selection-card__title">
+                Wybierz Getry
+              </div>
+              <div class="selection-card__selected">
+                {{selectedSock?.name}}
+              </div>
+              <div class="selection-card__image">
+                <mat-form-field>
+                  <mat-label>Wybierz Getry</mat-label>
+                  <mat-select [(value)]="selectedSock">
+                    <mat-option>None</mat-option>
+                    @for (sock of socks; track sock) {
+                      <mat-option [value]="sock">{{sock.name}}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            
+            <div class="selection-card">
+              <div class="selection-card__title">
+                Wybierz Buty
+              </div>
+              <div class="selection-card__selected">
+                {{selectedBoot?.name}}
+              </div>
+              <div class="selection-card__image">
+                <mat-form-field>
+                  <mat-label>Wybierz Korki</mat-label>
+                  <mat-select [(value)]="selectedBoot">
+                    <mat-option>None</mat-option>
+                    @for (boot of boots; track boot) {
+                      <mat-option [value]="boot">{{boot.name}}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>

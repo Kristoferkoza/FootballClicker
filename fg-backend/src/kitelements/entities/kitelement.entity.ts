@@ -11,7 +11,7 @@ export class KitElement {
   name: string;
 
   @Column({ type: 'enum', enum: KitPart })
-  kit_part: KitPart
+  kit_part: KitPart;
 
   @Column({ type: 'enum', enum: KitType })
   kit_type: KitType;
@@ -21,4 +21,7 @@ export class KitElement {
 
   @Column()
   cost: number;
+
+  @Column()
+  image_url: string;
 }

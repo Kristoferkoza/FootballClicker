@@ -7,4 +7,5 @@ export interface UpdateKitElement {
     kit_type?: KitType;
     points_given?: number;
     cost?: number;
+    image_url?: string;
 }
