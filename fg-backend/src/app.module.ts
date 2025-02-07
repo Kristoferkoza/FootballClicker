@@ -9,6 +9,7 @@ import { UserCardsModule } from './usercard/user-cards.module';
 import { PacksModule } from './packs/packs.module';
 import { KitElementsModule } from './kitelements/kitelements.module';
 import { UserKitElementModule } from './userkitelement/user-kitelement.module';
+import { UserKitElementConfigModule } from './UserKitElementConfig/UserKitElementConfig.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { UserKitElementModule } from './userkitelement/user-kitelement.module';
     PacksModule,
     KitElementsModule,
     UserKitElementModule,
+    UserKitElementConfigModule,
   ],
   controllers: [AppController],
   providers: [AppService],
