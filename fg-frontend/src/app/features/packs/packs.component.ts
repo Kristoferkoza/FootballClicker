@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../_services/users/users.service';
 import { User } from '../../_models/users/user.model';
-import { HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PacksService } from '../../_services/packs/packs.service';
 import { Pack } from '../../_models/packs/pack.model';
@@ -17,7 +16,7 @@ import { UserCardsService } from '../../_services/usercard/user-cards.service';
 @Component({
     selector: 'app-packs',
     standalone: true,
-    imports: [CommonModule, HttpClientModule, MatProgressSpinnerModule],
+    imports: [CommonModule, MatProgressSpinnerModule],
     providers: [UsersService, PacksService, CardsService, GameService, UserCardsService],
     templateUrl: './packs.component.html',
     styleUrl: './packs.component.scss',

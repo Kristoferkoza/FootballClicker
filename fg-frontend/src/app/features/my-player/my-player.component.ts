@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { KitElement } from '../../_models/kitelements/kit-element.model';
@@ -16,13 +15,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { UserKitElementConfigService } from '../../_services/userkitelementconfig/user-kitelementconfig.service';
 import { UserKitElementConfig } from '../../_models/userkitelementconfig/user-kitelementconfig.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BonusTimerService } from '../../_services/bonus-timer.service';
 
 @Component({
     selector: 'app-my-player',
     standalone: true,
     imports: [
         CommonModule,
-        HttpClientModule,
         MatProgressSpinnerModule,
         MatFormFieldModule,
         MatSelectModule,
@@ -69,6 +68,7 @@ export class MyPlayerComponent implements OnInit {
         private userKitElementConfigService: UserKitElementConfigService,
         private usersService: UsersService,
         private snackBar: MatSnackBar,
+        private bonusTimerService: BonusTimerService,
     ) {}
 
     ngOnInit(): void {
@@ -126,6 +126,7 @@ export class MyPlayerComponent implements OnInit {
 
         this.userKitElementConfigService.updateUserKitConfig(userId, updatedConfig).subscribe(
             (response) => {
+                this.bonusTimerService.resetBonusTimer(userId)
                 this.snackBar.open(`Zawodnik został zaaktualizowany`, 'Zamknij', {
                     duration: 5000,
                 });

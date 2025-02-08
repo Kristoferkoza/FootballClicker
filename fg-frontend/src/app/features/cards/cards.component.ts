@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CardsService } from '../../_services/cards/cards.service';
 import { Card } from '../../_models/cards/card.model';
-import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { UserCardsService } from '../../_services/usercard/user-cards.service';
 import { UsersService } from '../../_services/users/users.service';
@@ -14,7 +13,7 @@ import { FlagiKrajow } from '../../_enums/flags.enum';
 @Component({
   selector: 'app-cards',
   standalone: true,
-  imports: [HttpClientModule, CommonModule, MatExpansionModule, ClubNamePipe],
+  imports: [CommonModule, MatExpansionModule, ClubNamePipe],
   providers: [CardsService, UserCardsService, UsersService],
   templateUrl: './cards.component.html',
   styleUrls: ['./cards.component.scss'],

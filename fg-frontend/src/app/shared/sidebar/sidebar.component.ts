@@ -4,7 +4,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { Router } from '@angular/router';
 import { UsersService } from '../../_services/users/users.service';
 import { User } from '../../_models/users/user.model';
-import { HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UserKitElementConfigService } from '../../_services/userkitelementconfig/user-kitelementconfig.service';
 
@@ -14,7 +13,6 @@ import { UserKitElementConfigService } from '../../_services/userkitelementconfi
     imports: [
         CommonModule,
         MatDividerModule,
-        HttpClientModule,
         MatProgressSpinnerModule,
     ],
     providers: [UsersService, UserKitElementConfigService],

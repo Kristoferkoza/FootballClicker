@@ -2,24 +2,23 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from '../../_models/users/user.model';
 import { UsersService } from '../../_services/users/users.service';
 import { Router } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { GameService } from '../../_services/game/game.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { BonusTimerService } from '../../_services/bonus-timer.service';
 
 @Component({
     selector: 'app-clicker',
     standalone: true,
     imports: [
-        HttpClientModule,
         CommonModule,
         MatProgressSpinnerModule,
         MatButtonModule,
         MatSnackBarModule,
     ],
-    providers: [UsersService],
+    providers: [UsersService, BonusTimerService],
     templateUrl: './clicker.component.html',
     styleUrls: ['./clicker.component.scss'],
 })
@@ -36,6 +35,7 @@ export class ClickerComponent implements OnInit, OnDestroy {
         private router: Router,
         private gameService: GameService,
         private snackBar: MatSnackBar,
+        private bonusTimerService: BonusTimerService,
     ) {}
 
     ngOnInit() {
@@ -50,6 +50,7 @@ export class ClickerComponent implements OnInit, OnDestroy {
                     this.counter = localCounter;
                 } else {
                     this.counter = dbCounter;
+                    this.gameService.setCounter(this.counter);
                 }
                 this.loading = false;
             });
@@ -73,6 +74,7 @@ export class ClickerComponent implements OnInit, OnDestroy {
             points: this.counter,
         });
         this.usersService.removeSelectedAccountId();
+        this.bonusTimerService.stopBonusTimer()
         this.router.navigate(['/select-account']);
     }
 

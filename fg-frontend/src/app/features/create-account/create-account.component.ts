@@ -3,12 +3,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { UsersService } from '../../_services/users/users.service';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-account',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   providers: [UsersService],
   templateUrl: './create-account.component.html',
   styleUrl: './create-account.component.scss'

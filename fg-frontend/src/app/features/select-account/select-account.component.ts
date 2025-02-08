@@ -5,13 +5,13 @@ import { Router } from '@angular/router';
 import { GameService } from '../../_services/game/game.service';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { BonusTimerService } from '../../_services/bonus-timer.service';
 
 @Component({
   selector: 'app-select-account',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, MatProgressSpinnerModule],
+  imports: [CommonModule, MatProgressSpinnerModule],
   providers: [UsersService],
   templateUrl: './select-account.component.html',
   styleUrl: './select-account.component.scss',
@@ -37,7 +37,8 @@ export class SelectAccountComponent implements OnInit {
   constructor(
     private usersService: UsersService,
     private router: Router,
-    private gameService: GameService
+    private gameService: GameService,
+    private bonusTimerService: BonusTimerService,
   ) {}
 
   ngOnInit() {
@@ -50,6 +51,7 @@ export class SelectAccountComponent implements OnInit {
 
   play(userId: string) {
     this.usersService.setSelectedAccountId(userId);
+    this.bonusTimerService.startBonusTimer(userId);
     this.router.navigate(['/clicker']);
   }
 

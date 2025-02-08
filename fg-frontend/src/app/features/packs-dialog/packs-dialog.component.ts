@@ -5,14 +5,13 @@ import { Card } from '../../_models/cards/card.model';
 import { CardsService } from '../../_services/cards/cards.service';
 import { forkJoin } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-packs-dialog',
     standalone: true,
-    imports: [CommonModule, MatDialogModule, MatProgressSpinnerModule, HttpClientModule, MatButtonModule, MatIconModule],
+    imports: [CommonModule, MatDialogModule, MatProgressSpinnerModule, MatButtonModule, MatIconModule],
     providers: [CardsService],
     templateUrl: './packs-dialog.component.html',
     styleUrl: './packs-dialog.component.scss',
