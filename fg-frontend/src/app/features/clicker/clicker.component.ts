@@ -66,7 +66,9 @@ export class ClickerComponent implements OnInit, OnDestroy {
     }
 
     increment() {
+        this.counter = this.gameService.getCounter()!
         this.counter++;
+        this.gameService.setCounter(this.counter);
     }
 
     endGame() {
@@ -79,6 +81,7 @@ export class ClickerComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
+        this.counter = this.gameService.getCounter()!
         this.gameService.setCounter(this.counter);
         if (this.intervalId) {
             clearInterval(this.intervalId);
