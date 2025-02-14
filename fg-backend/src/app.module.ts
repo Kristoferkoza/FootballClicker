@@ -10,6 +10,7 @@ import { PacksModule } from './packs/packs.module';
 import { KitElementsModule } from './kitelements/kitelements.module';
 import { UserKitElementModule } from './userkitelement/user-kitelement.module';
 import { UserKitElementConfigModule } from './UserKitElementConfig/UserKitElementConfig.module';
+import { BoxesModule } from './boxes/boxes.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { UserKitElementConfigModule } from './UserKitElementConfig/UserKitElemen
     KitElementsModule,
     UserKitElementModule,
     UserKitElementConfigModule,
+    BoxesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
