@@ -1,0 +1,87 @@
+@import "../../shared/styles/variables";
+
+.modal-container {
+    position: relative;
+    padding: 2rem;
+    background: $background;
+    border-radius: 12px;
+    max-width: 800px;
+    margin: 0 auto;
+
+    h2 {
+        color: $primary;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+        text-align: center;
+    }
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.card-item {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+}
+
+.card-image {
+    width: 100%;
+    object-fit: cover;
+    border-bottom: 3px solid $secondary;
+}
+
+.card-content {
+    padding: 1rem;
+    text-align: center;
+}
+
+.card-name {
+    color: $font-dark;
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-rarity {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    &.common { color: $common; }
+    &.rare { color: $rare; }
+    &.epic { color: $epic; }
+    &.legendary { color: $legendary; }
+}
+
+.close-button {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    color: $primary;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: darken($primary, 15%);
+    }
+}

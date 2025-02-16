@@ -1,1 +1,23 @@
-<p>boxes works!</p>
+<div *ngIf="loading" class="loading-stage">
+    <mat-spinner></mat-spinner>
+    <p>Ładowanie...</p>
+</div>
+
+<div *ngIf="!loading" class="page-container">
+    <div class="page-title">Dostępne skrzynki do kupienia</div>
+    <div class="box-group">
+        <div class="box-item" *ngFor="let box of boxes">
+            <img [src]="'boxes/' + box.image_url + '.png'" alt="{{box.name}}">
+            <div class="box-name">{{box.name}}</div>
+            
+            <div class="probability-list">
+                <div class="probability-item" *ngFor="let prob of getProbabilities(box)">
+                    <span class="label">{{prob.rarity}}</span>
+                    <span class="value">{{prob.value}}%</span>
+                </div>
+            </div>
+
+            <button (click)="buyBox(box)">Kup za {{ box.cost }}</button>
+        </div>
+    </div>
+</div>

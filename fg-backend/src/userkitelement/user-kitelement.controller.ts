@@ -9,7 +9,7 @@ export class UserKitElementController {
   @Post(':userId/:kitElementId')
     async addKitElement(
       @Param('userId') userId: string,
-      @Param('cardId') kitElementId: string,
+      @Param('kitElementId') kitElementId: string,
     ) {
       return this.userkitelementService.addKitElementToUser(userId, kitElementId);
     }

@@ -29,6 +29,7 @@ export class UserKitElementService {
     let userKitElement = await this.userKitElementRepository.findOne({
       where: { user: { id: userId }, kitElement: { id: kitElementId } },
     });
+    
 
     if (userKitElement) {
         userKitElement.quantity += 1;
