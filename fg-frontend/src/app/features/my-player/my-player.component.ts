@@ -112,8 +112,40 @@ export class MyPlayerComponent implements OnInit {
         return id ? elements.find(element => element.id === id) || null : null;
     }
 
+    getClubFromName(name: string) {
+        return name.replace(/^(Korki|Getry|Spodenki|Koszulka)\s+/, '');
+    }
+
+    countBonus() {
+        const selectedElements: KitElement[] = [
+            this.selectedBoot,
+            this.selectedSock,
+            this.selectedShort,
+            this.selectedTshirt
+        ].filter((el): el is KitElement => el !== null);
+    
+        let total = 0;
+    
+        for (const element of selectedElements) {
+            const club = this.getClubFromName(element.name);
+            const count = selectedElements.filter(el => this.getClubFromName(el.name) === club).length;
+    
+            let multiplier = 1;
+            if (count >= 4) {
+                multiplier = 2.5;
+            } else if (count >= 3) {
+                multiplier = 2;
+            } else if (count >= 2) {
+                multiplier = 1.5;
+            }
+            total += Math.round(element.points_given * multiplier);
+        }
+    
+        return total;
+    }
+
     savePlayer() {        
-        let bonus = (this.selectedBoot?.points_given || 0) + (this.selectedSock?.points_given || 0) + (this.selectedShort?.points_given || 0) + (this.selectedTshirt?.points_given || 0);
+        let bonus = this.countBonus()
         const userId = this.usersService.getSelectedAccountId()!;
         const updatedConfig: Partial<UserKitElementConfig> = {
             userId,
@@ -127,7 +159,7 @@ export class MyPlayerComponent implements OnInit {
         this.userKitElementConfigService.updateUserKitConfig(userId, updatedConfig).subscribe(
             (response) => {
                 this.bonusTimerService.resetBonusTimer(userId)
-                this.snackBar.open(`Zawodnik został zaaktualizowany`, 'Zamknij', {
+                this.snackBar.open(`Zawodnik został zaaktualizowany. Bonusowe punkty: ${updatedConfig.bonus}.`, 'Zamknij', {
                     duration: 5000,
                 });
             },
