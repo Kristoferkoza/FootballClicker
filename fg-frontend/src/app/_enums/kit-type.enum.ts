@@ -1,6 +1,6 @@
 export enum KitType {
-    BLUE = 'common',
-    PINK = 'rare',
-    PURPLE = 'epic',
-    YELLOW = 'legendary',
+    COMMON = 'common',
+    RARE = 'rare',
+    EPIC = 'epic',
+    LEGENDARY = 'legendary',
 }

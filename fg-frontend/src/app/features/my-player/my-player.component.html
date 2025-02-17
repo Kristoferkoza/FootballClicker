@@ -5,6 +5,11 @@
 
 <div *ngIf="!this.loading" class="page-container">
     <h1 class="page-title">Twój Zawodnik</h1>
+    
+    <div class="total-bonus" @fadeIn>
+        Aktualny bonus: {{ countBonus() }} punktów
+    </div>
+
     <div class="page-content">
         <div class="player-photo">
             <img
@@ -15,42 +20,46 @@
         </div>
 
         <div class="selection-cards">
+            <!-- Koszulka -->
             <div class="selection-card" @fadeIn>
                 <div class="selection-card-header">
                     <h2 class="selection-card__title">Koszulka</h2>
                     <div class="selection-card__selected">
                         <img
                             *ngIf="selectedTshirt"
-                            [src]="
-                                'kit_elements/' +
-                                selectedTshirt.image_url +
-                                '.png'
-                            "
+                            [src]="'kit_elements/' + selectedTshirt.image_url + '.png'"
                             class="selected-image"
                         />
+                        <div *ngIf="selectedTshirt" class="item-info">
+                            <span class="points">{{ selectedTshirt.points_given }} PKT</span>
+                            <span class="rarity" [ngClass]="getRarityClass(selectedTshirt.kit_type)">
+                                {{ getRarityName(selectedTshirt.kit_type) }}
+                            </span>
+                        </div>
                         <div *ngIf="!selectedTshirt" class="placeholder">
                             Wybierz koszulkę
                         </div>
                     </div>
                 </div>
                 <mat-form-field class="selection-card__input">
-                    <mat-select
-                        [(value)]="selectedTshirt"
-                        panelClass="custom-panel"
-                    >
+                    <mat-select [(value)]="selectedTshirt" panelClass="custom-panel">
                         <mat-option [value]="null">Brak</mat-option>
                         @for (tshirt of tshirts; track tshirt) {
                         <mat-option [value]="tshirt">
                             <div class="option-content">
                                 <img
-                                    [src]="
-                                        'kit_elements/' +
-                                        tshirt.image_url +
-                                        '.png'
-                                    "
+                                    [src]="'kit_elements/' + tshirt.image_url + '.png'"
                                     class="option-image"
                                 />
-                                <span>{{ tshirt.name }}</span>
+                                <div class="item-details">
+                                    <span class="item-name">{{ tshirt.name }}</span>
+                                    <div class="item-stats">
+                                        <span class="points">{{ tshirt.points_given }} PKT</span>
+                                        <span class="rarity" [ngClass]="getRarityClass(tshirt.kit_type)">
+                                            {{ getRarityName(tshirt.kit_type) }}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </mat-option>
                         }
@@ -58,42 +67,46 @@
                 </mat-form-field>
             </div>
 
+            <!-- Spodenki -->
             <div class="selection-card" @fadeIn>
                 <div class="selection-card-header">
                     <h2 class="selection-card__title">Spodenki</h2>
                     <div class="selection-card__selected">
                         <img
                             *ngIf="selectedShort"
-                            [src]="
-                                'kit_elements/' +
-                                selectedShort.image_url +
-                                '.png'
-                            "
+                            [src]="'kit_elements/' + selectedShort.image_url + '.png'"
                             class="selected-image"
                         />
+                        <div *ngIf="selectedShort" class="item-info">
+                            <span class="points">{{ selectedShort.points_given }} PKT</span>
+                            <span class="rarity" [ngClass]="getRarityClass(selectedShort.kit_type)">
+                                {{ getRarityName(selectedShort.kit_type) }}
+                            </span>
+                        </div>
                         <div *ngIf="!selectedShort" class="placeholder">
                             Wybierz spodenki
                         </div>
                     </div>
                 </div>
                 <mat-form-field class="selection-card__input">
-                    <mat-select
-                        [(value)]="selectedShort"
-                        panelClass="custom-panel"
-                    >
+                    <mat-select [(value)]="selectedShort" panelClass="custom-panel">
                         <mat-option [value]="null">Brak</mat-option>
                         @for (short of shorts; track short) {
                         <mat-option [value]="short">
                             <div class="option-content">
                                 <img
-                                    [src]="
-                                        'kit_elements/' +
-                                        short.image_url +
-                                        '.png'
-                                    "
+                                    [src]="'kit_elements/' + short.image_url + '.png'"
                                     class="option-image"
                                 />
-                                <span>{{ short.name }}</span>
+                                <div class="item-details">
+                                    <span class="item-name">{{ short.name }}</span>
+                                    <div class="item-stats">
+                                        <span class="points">{{ short.points_given }} PKT</span>
+                                        <span class="rarity" [ngClass]="getRarityClass(short.kit_type)">
+                                            {{ getRarityName(short.kit_type) }}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </mat-option>
                         }
@@ -101,42 +114,46 @@
                 </mat-form-field>
             </div>
 
+            <!-- Getry -->
             <div class="selection-card" @fadeIn>
                 <div class="selection-card-header">
                     <h2 class="selection-card__title">Getry</h2>
                     <div class="selection-card__selected">
                         <img
                             *ngIf="selectedSock"
-                            [src]="
-                                'kit_elements/' +
-                                selectedSock.image_url +
-                                '.png'
-                            "
+                            [src]="'kit_elements/' + selectedSock.image_url + '.png'"
                             class="selected-image"
                         />
+                        <div *ngIf="selectedSock" class="item-info">
+                            <span class="points">{{ selectedSock.points_given }} PKT</span>
+                            <span class="rarity" [ngClass]="getRarityClass(selectedSock.kit_type)">
+                                {{ getRarityName(selectedSock.kit_type) }}
+                            </span>
+                        </div>
                         <div *ngIf="!selectedSock" class="placeholder">
                             Wybierz getry
                         </div>
                     </div>
                 </div>
                 <mat-form-field class="selection-card__input">
-                    <mat-select
-                        [(value)]="selectedSock"
-                        panelClass="custom-panel"
-                    >
+                    <mat-select [(value)]="selectedSock" panelClass="custom-panel">
                         <mat-option [value]="null">Brak</mat-option>
                         @for (sock of socks; track sock) {
                         <mat-option [value]="sock">
                             <div class="option-content">
                                 <img
-                                    [src]="
-                                        'kit_elements/' +
-                                        sock.image_url +
-                                        '.png'
-                                    "
+                                    [src]="'kit_elements/' + sock.image_url + '.png'"
                                     class="option-image"
                                 />
-                                <span>{{ sock.name }}</span>
+                                <div class="item-details">
+                                    <span class="item-name">{{ sock.name }}</span>
+                                    <div class="item-stats">
+                                        <span class="points">{{ sock.points_given }} PKT</span>
+                                        <span class="rarity" [ngClass]="getRarityClass(sock.kit_type)">
+                                            {{ getRarityName(sock.kit_type) }}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </mat-option>
                         }
@@ -144,42 +161,46 @@
                 </mat-form-field>
             </div>
 
+            <!-- Korki -->
             <div class="selection-card" @fadeIn>
                 <div class="selection-card-header">
                     <h2 class="selection-card__title">Korki</h2>
                     <div class="selection-card__selected">
                         <img
                             *ngIf="selectedBoot"
-                            [src]="
-                                'kit_elements/' +
-                                selectedBoot.image_url +
-                                '.png'
-                            "
+                            [src]="'kit_elements/' + selectedBoot.image_url + '.png'"
                             class="selected-image"
                         />
+                        <div *ngIf="selectedBoot" class="item-info">
+                            <span class="points">{{ selectedBoot.points_given }} PKT</span>
+                            <span class="rarity" [ngClass]="getRarityClass(selectedBoot.kit_type)">
+                                {{ getRarityName(selectedBoot.kit_type) }}
+                            </span>
+                        </div>
                         <div *ngIf="!selectedBoot" class="placeholder">
                             Wybierz korki
                         </div>
                     </div>
                 </div>
                 <mat-form-field class="selection-card__input">
-                    <mat-select
-                        [(value)]="selectedBoot"
-                        panelClass="custom-panel"
-                    >
+                    <mat-select [(value)]="selectedBoot" panelClass="custom-panel">
                         <mat-option [value]="null">Brak</mat-option>
                         @for (boot of boots; track boot) {
                         <mat-option [value]="boot">
                             <div class="option-content">
                                 <img
-                                    [src]="
-                                        'kit_elements/' +
-                                        boot.image_url +
-                                        '.png'
-                                    "
+                                    [src]="'kit_elements/' + boot.image_url + '.png'"
                                     class="option-image"
                                 />
-                                <span>{{ boot.name }}</span>
+                                <div class="item-details">
+                                    <span class="item-name">{{ boot.name }}</span>
+                                    <div class="item-stats">
+                                        <span class="points">{{ boot.points_given }} PKT</span>
+                                        <span class="rarity" [ngClass]="getRarityClass(boot.kit_type)">
+                                            {{ getRarityName(boot.kit_type) }}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </mat-option>
                         }
@@ -188,6 +209,7 @@
             </div>
         </div>
     </div>
+    
     <div class="save-section">
         <button mat-raised-button (click)="savePlayer()">Zapisz zawodnika</button>
     </div>

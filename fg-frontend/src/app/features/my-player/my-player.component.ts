@@ -16,6 +16,7 @@ import { UserKitElementConfigService } from '../../_services/userkitelementconfi
 import { UserKitElementConfig } from '../../_models/userkitelementconfig/user-kitelementconfig.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BonusTimerService } from '../../_services/bonus-timer.service';
+import { KitType } from '../../_enums/kit-type.enum';
 
 @Component({
     selector: 'app-my-player',
@@ -114,6 +115,26 @@ export class MyPlayerComponent implements OnInit {
 
     getClubFromName(name: string) {
         return name.replace(/^(Korki|Getry|Spodenki|Koszulka)\s+/, '');
+    }
+
+    getRarityName(kitType: KitType): string {
+        switch(kitType) {
+            case KitType.COMMON: return 'Powszechny';
+            case KitType.RARE: return 'Rzadki';
+            case KitType.EPIC: return 'Epicki';
+            case KitType.LEGENDARY: return 'Legendarny';
+            default: return 'Nieznany';
+        }
+    }
+    
+    getRarityClass(kitType: KitType): string {
+        switch(kitType) {
+            case KitType.COMMON: return 'common';
+            case KitType.RARE: return 'rare';
+            case KitType.EPIC: return 'epic';
+            case KitType.LEGENDARY: return 'legendary';
+            default: return '';
+        }
     }
 
     countBonus() {
