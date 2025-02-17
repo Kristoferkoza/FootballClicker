@@ -58,6 +58,39 @@ export class SidebarComponent implements OnInit {
                 this.loading = false;
             }
         );
+        setTimeout(() => {
+            this.addRippleEffects();
+        }, 0);
+        
+    }
+
+    private addRippleEffects() {
+        document.querySelectorAll('.sidebar__item').forEach(item => {
+            item.addEventListener('click', (e: any) => {
+                const rect = item.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const ripple = document.createElement('div');
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: 20px; height: 20px;
+                    background: rgba(255,255,255,0.3);
+                    border-radius: 50%;
+                    transform: translate(-50%, -50%) scale(0);
+                    animation: ripple 0.6s ease-out;
+                `;
+                
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                item.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
     }
 
     navigateTo(path: string) {
