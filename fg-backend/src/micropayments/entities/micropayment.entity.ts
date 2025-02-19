@@ -13,4 +13,7 @@ export class Micropayment {
 
     @Column()
     reward: string;
+
+    @Column()
+    imageUrl: string;
 }

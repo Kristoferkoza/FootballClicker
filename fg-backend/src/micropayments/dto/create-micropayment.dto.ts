@@ -9,4 +9,7 @@ export class CreateMicropaymentDto {
 
   @IsString()
   reward: string;
+
+  @IsString()
+  imageUrl: string;
 }
