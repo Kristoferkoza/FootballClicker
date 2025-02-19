@@ -11,6 +11,7 @@ import { KitElementsModule } from './kitelements/kitelements.module';
 import { UserKitElementModule } from './userkitelement/user-kitelement.module';
 import { UserKitElementConfigModule } from './UserKitElementConfig/UserKitElementConfig.module';
 import { BoxesModule } from './boxes/boxes.module';
+import { MicropaymentsModule } from './micropayments/micropayments.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { BoxesModule } from './boxes/boxes.module';
     UserKitElementModule,
     UserKitElementConfigModule,
     BoxesModule,
+    MicropaymentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
