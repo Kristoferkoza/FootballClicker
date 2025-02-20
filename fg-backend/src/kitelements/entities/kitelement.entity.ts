@@ -20,8 +20,8 @@ export class KitElement {
   @Column()
   points_given: number;
 
-  @Column()
-  cost: number;
+  @Column({ default: true })
+  can_be_dropped: boolean;
 
   @Column()
   image_url: string;

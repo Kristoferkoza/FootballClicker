@@ -6,6 +6,6 @@ export interface CreateKitElement {
     kit_part: KitPart;
     kit_type: KitType;
     points_given: number;
-    cost: number;
+    can_be_dropped: boolean;
     image_url: string;
 }
