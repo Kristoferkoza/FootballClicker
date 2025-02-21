@@ -21,7 +21,7 @@ export class KitElementsService {
     findAllIdsByType(kitElementType: string) {
             return this.http.get<any[]>(`${this.apiUrl}`).pipe(
                 map(kitElements => kitElements
-                    .filter(kitElement => kitElement.kit_type === kitElementType)
+                    .filter(kitElement => kitElement.kit_type === kitElementType && kitElement.can_be_dropped == true)
                     .map(kitElement => kitElement.id)
                 )
             );
