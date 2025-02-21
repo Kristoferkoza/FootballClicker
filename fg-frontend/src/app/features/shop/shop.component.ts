@@ -35,9 +35,22 @@ export class ShopComponent implements OnInit {
     }
 
     private splitMicropayments(): void {
-        const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+        const uuidRegex =
+            /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-        this.currencyMicropayments = this.micropayments.filter(mp => !uuidRegex.test(mp.reward));
-        this.itemMicropayments = this.micropayments.filter(mp => uuidRegex.test(mp.reward));
+        this.currencyMicropayments = this.micropayments.filter(
+            (mp) => !uuidRegex.test(mp.reward)
+        );
+        this.itemMicropayments = this.micropayments.filter((mp) =>
+            uuidRegex.test(mp.reward)
+        );
+    }
+
+    formatPrice(price: number): string {
+        return (price - 0.01).toFixed(2);
+    }
+
+    purchase(micropayment: Micropayment): void {
+        console.log('Purchased reward:', micropayment.reward);
     }
 }

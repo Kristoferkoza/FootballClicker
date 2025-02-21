@@ -1,0 +1,140 @@
+@import "../../shared/styles/variables";
+
+.page-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.shop-section {
+    margin-bottom: 3rem;
+    animation: fadeIn 0.5s ease-out;
+
+    &:not(:first-child) {
+        margin-top: 3rem;
+    }
+}
+
+.section-title {
+    display: flex;
+    justify-content: center;
+    color: $accent;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid $sidebar-border;
+}
+
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.item-card {
+    background: $background;
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    }
+}
+
+.item-image {
+    width: 100%;
+    display: flex;
+    height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    justify-content: center;
+
+    img {
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    &:hover img {
+        transform: scale(1.05);
+    }
+}
+
+.item-name {
+    color: $font-dark;
+    font-size: 1.25rem;
+    margin: 0.5rem 0;
+    text-align: center;
+}
+
+.price {
+    color: $primary;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+}
+
+.reward {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+    text-align: center;
+
+    &.currency-reward {
+        color: $legendary;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    &.item-reward {
+        color: $rare;
+        font-style: italic;
+    }
+}
+
+.buy-button {
+    margin-top: 1rem;
+    background-color: $primary !important;
+    color: $font-light !important;
+    padding: 0.75rem 2rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+
+    &:hover {
+        background-color: darken($primary, 10%) !important;
+        transform: scale(1.05);
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+.ball-icon {
+    display: flex;
+    align-items: center;
+    img {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

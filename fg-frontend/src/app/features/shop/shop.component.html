@@ -3,4 +3,47 @@
     <p>Ładowanie...</p>
 </div>
 
-<p>shop works!</p>
+<div *ngIf="!this.loading" class="page-container">
+    <section *ngIf="currencyMicropayments.length > 0" class="shop-section">
+        <h2 class="section-title">Zdobywaj walutę</h2>
+        <div class="items-grid">
+            <div *ngFor="let mp of currencyMicropayments" class="item-card">
+                <div class="item-image">
+                    <img [src]="'micropayments/' + mp.imageUrl + '.png'" [alt]="mp.name">
+                </div>
+                <h3 class="item-name">{{ mp.name }}</h3>
+                <div class="price">{{ formatPrice(mp.price) }} PLN</div>
+                <div class="reward currency-reward">
+                    <span class="ball-icon"><img src="ball.png" alt="🪙"></span>
+                    +{{ mp.reward }} PIŁEK
+                </div>
+                <button mat-raised-button 
+                        class="buy-button"
+                        (click)="purchase(mp)"
+                        [disabled]="loading">
+                    Kup teraz
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section *ngIf="itemMicropayments.length > 0" class="shop-section">
+        <h2 class="section-title">Kolekcjonuj przedmioty</h2>
+        <div class="items-grid">
+            <div *ngFor="let mp of itemMicropayments" class="item-card">
+                <div class="item-image">
+                    <img [src]="'kit_elements/' + mp.imageUrl + '.png'" [alt]="mp.name">
+                </div>
+                <h3 class="item-name">{{ mp.name }}</h3>
+                <div class="price">{{ formatPrice(mp.price) }} PLN</div>
+                <div class="reward item-reward">{{ mp.name }}</div>
+                <button mat-raised-button 
+                        class="buy-button"
+                        (click)="purchase(mp)"
+                        [disabled]="loading">
+                    Kup teraz
+                </button>
+            </div>
+        </div>
+    </section>
+</div>
