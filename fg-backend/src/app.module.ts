@@ -12,6 +12,8 @@ import { UserKitElementModule } from './userkitelement/user-kitelement.module';
 import { UserKitElementConfigModule } from './UserKitElementConfig/UserKitElementConfig.module';
 import { BoxesModule } from './boxes/boxes.module';
 import { MicropaymentsModule } from './micropayments/micropayments.module';
+import { StripeModule } from './stripe/stripe.module';
+import { PaymentController } from './payment/payment.controller';
 
 @Module({
   imports: [
@@ -35,8 +37,9 @@ import { MicropaymentsModule } from './micropayments/micropayments.module';
     UserKitElementConfigModule,
     BoxesModule,
     MicropaymentsModule,
+    StripeModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, PaymentController],
   providers: [AppService],
 })
 export class AppModule {}
