@@ -14,13 +14,13 @@ export class PaymentController {
     try {
       const baseUrl = this.configService.get('FRONTEND_URL') || 'http://localhost:4200';
       
-      const unitAmount = Math.round(Number(body.micropayment.price) * 100);
+      const unitAmount = Number(body.micropayment.price) * 100 - 1;
       if (isNaN(unitAmount)) {
         throw new Error('Invalid price format');
       }
 
       const session = await this.stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
+        payment_method_types: ['card', 'blik'],
         line_items: [{
           price_data: {
             currency: 'pln',
