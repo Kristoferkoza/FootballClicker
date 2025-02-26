@@ -75,7 +75,9 @@ export class ShopComponent implements OnInit {
                             this.gameService.setCounter(
                                 Number(score) + Number(micropayment.reward)
                             );
-                            console.log(micropayment.reward);
+                            this.usersService.update(this.selectedUserId, {
+                                points: this.gameService.getCounter()!,
+                            });
                         }
                         this.loading = false;
 

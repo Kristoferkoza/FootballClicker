@@ -9,11 +9,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { CardType } from '../../_enums/card-type.enum';
 import { ClubNamePipe } from '../../_pipes/club-name.pipe';
 import { FlagiKrajow } from '../../_enums/flags.enum';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cards',
   standalone: true,
-  imports: [CommonModule, MatExpansionModule, ClubNamePipe],
+  imports: [CommonModule, MatExpansionModule, ClubNamePipe, FormsModule],
   providers: [CardsService, UserCardsService, UsersService],
   templateUrl: './cards.component.html',
   styleUrls: ['./cards.component.scss'],
@@ -25,6 +26,11 @@ export class CardsComponent implements OnInit {
   allCards: Card[] = [];
   userCards: UserCards[] = [];
   ownedCardsMap: { [cardId: string]: UserCards } = {};
+  
+  minOverall: number | null = null;
+  maxOverall: number | null = null;
+  sortBy: string = 'overallDesc';
+  filteredCards: Card[] = [];
 
   constructor(
     private cardsService: CardsService,
@@ -37,6 +43,7 @@ export class CardsComponent implements OnInit {
 
     this.cardsService.findAll().subscribe((cards: any) => {
       this.allCards = cards;
+      this.applyFilters();
 
       this.userCardsService.getUserCards(this.selectedUserId)
         .subscribe((userCards: UserCards[]) => {
@@ -69,20 +76,29 @@ export class CardsComponent implements OnInit {
     return userCard ? userCard.quantity : 0;
   }
 
-  get commonCards(): Card[] {
-    return this.allCards.filter(card => card.cardType === CardType.BLUE);
-  }
-  get rareCards(): Card[] {
-    return this.allCards.filter(card => card.cardType === CardType.PINK);
-  }
-  get epicCards(): Card[] {
-    return this.allCards.filter(card => card.cardType === CardType.PURPLE);
-  }
-  get legendaryCards(): Card[] {
-    return this.allCards.filter(card => card.cardType === CardType.YELLOW);
-  }
-
   getFlagCode = (nationality: string): string | undefined => {
     return FlagiKrajow[nationality as keyof typeof FlagiKrajow];
   };
+
+  applyFilters() {
+    this.filteredCards = this.allCards.filter(card => {
+      const matchesMin = this.minOverall ? card.overall >= this.minOverall : true;
+      const matchesMax = this.maxOverall ? card.overall <= this.maxOverall : true;
+      return matchesMin && matchesMax;
+    });
+  
+    this.sortCards();
+  }
+
+  sortCards() {
+    this.filteredCards.sort((a, b) => {
+      switch(this.sortBy) {
+        case 'overallDesc': return b.overall - a.overall;
+        case 'overallAsc': return a.overall - b.overall;
+        case 'nameAsc': return a.name.localeCompare(b.name);
+        case 'nameDesc': return b.name.localeCompare(a.name);
+        default: return b.overall - a.overall;
+      }
+    });
+  }
 }
