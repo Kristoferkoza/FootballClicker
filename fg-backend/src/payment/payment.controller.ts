@@ -32,7 +32,7 @@ export class PaymentController {
           quantity: 1,
         }],
         mode: 'payment',
-        success_url: `${baseUrl}/shop?success=true&session_id={CHECKOUT_SESSION_ID}`,
+        success_url: `${baseUrl}/shop?success=true&micropaymentId=${body.micropayment.id}`,
         cancel_url: `${baseUrl}/shop?canceled=true`,
         metadata: {
           userId: body.userId,

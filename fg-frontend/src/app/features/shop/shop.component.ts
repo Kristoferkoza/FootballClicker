@@ -8,6 +8,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { environment } from '../../../environments/environment';
 import { loadStripe } from '@stripe/stripe-js';
 import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserKitElementsService } from '../../_services/userkitelement/user-kitelements.service';
+import { GameService } from '../../_services/game/game.service';
 
 @Component({
     selector: 'app-shop',
@@ -28,24 +31,49 @@ export class ShopComponent implements OnInit {
     constructor(
         private micropaymentsService: MicroPaymentsService,
         private usersService: UsersService,
-        private route: ActivatedRoute
+        private userKitElementsService: UserKitElementsService,
+        private gameService: GameService,
+        private route: ActivatedRoute,
+        private snackBar: MatSnackBar
     ) {}
 
     ngOnInit() {
+        this.loading = true;
         this.selectedUserId = this.usersService.getSelectedAccountId()!;
         this.micropaymentsService.findAll().subscribe((micropayments: any) => {
             this.micropayments = micropayments;
             this.splitMicropayments();
-            this.loading = false;
         });
-        this.route.queryParams.subscribe(params => {
+        this.route.queryParams.subscribe((params) => {
             if (params['success']) {
-              console.log('Purchased reward:', /* Tutaj możesz dodać logikę pobierania nagrody */);
+                const micropaymentId = params['micropaymentId'];
+                this.micropaymentsService
+                    .findOne(micropaymentId)
+                    .subscribe((micropayment: any) => {
+                        if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(micropayment.reward)) {
+                            this.userKitElementsService.addKitElement(this.selectedUserId, micropayment.reward).subscribe(() => {});
+                            console.log(micropayment.reward);
+                        } else {
+                            let score = this.gameService.getCounter();
+                            this.gameService.setCounter(Number(score) + Number(micropayment.reward));
+                            console.log(micropayment.reward);
+                        }
+                        this.loading = false;
+
+                        this.snackBar.open(
+                            `Płatność zakończona. Nagroda została dodana do Twojego konta.`,
+                            'Zamknij',
+                            {
+                                duration: 5000,
+                            }
+                        );
+                    });
             }
             if (params['canceled']) {
-              console.log('Płatność anulowana');
+                console.log('Płatność anulowana');
             }
-          });
+            this.loading = false;
+        });
     }
 
     private splitMicropayments(): void {
@@ -67,30 +95,34 @@ export class ShopComponent implements OnInit {
     async purchase(micropayment: Micropayment) {
         this.loading = true;
         try {
-          const response = await fetch('http://localhost:3000/payment/create-session', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              micropayment: micropayment,
-              userId: this.selectedUserId
-            }),
-          });
-      
-          const { sessionId } = await response.json();
-          const stripe = await this.stripePromise;
-      
-          if (stripe) {
-            const { error } = await stripe.redirectToCheckout({ sessionId });
-          } else {
-            console.error('Stripe has not loaded.');
-          }
-        } catch (err) {
-          console.error('Błąd podczas przetwarzania płatności:', err);
-        } finally {
-          this.loading = false;
-        }
-      }
-}
+            const response = await fetch(
+                'http://localhost:3000/payment/create-session',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        micropayment: micropayment,
+                        userId: this.selectedUserId,
+                    }),
+                }
+            );
 
+            const { sessionId } = await response.json();
+            const stripe = await this.stripePromise;
+
+            if (stripe) {
+                const { error } = await stripe.redirectToCheckout({
+                    sessionId,
+                });
+            } else {
+                console.error('Stripe has not loaded.');
+            }
+        } catch (err) {
+            console.error('Błąd podczas przetwarzania płatności:', err);
+        } finally {
+            this.loading = false;
+        }
+    }
+}
