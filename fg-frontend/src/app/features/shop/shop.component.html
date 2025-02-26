@@ -39,8 +39,8 @@
                 <button mat-raised-button 
                         class="buy-button"
                         (click)="purchase(mp)"
-                        [disabled]="loading">
-                    Kup teraz
+                        [disabled]="loading || isOwned(mp)">
+                        {{ isOwned(mp) ? 'Już posiadane' : 'Kup teraz' }}
                 </button>
             </div>
         </div>

@@ -25,6 +25,7 @@ export class ShopComponent implements OnInit {
     micropayments: Micropayment[] = [];
     currencyMicropayments: Micropayment[] = [];
     itemMicropayments: Micropayment[] = [];
+    ownedKitElements: string[] = [];
 
     private stripePromise = loadStripe(environment.stripePublicKey);
 
@@ -40,6 +41,14 @@ export class ShopComponent implements OnInit {
     ngOnInit() {
         this.loading = true;
         this.selectedUserId = this.usersService.getSelectedAccountId()!;
+        this.userKitElementsService
+            .getUserKitElements(this.selectedUserId)
+            .subscribe((elements: any[]) => {
+                this.ownedKitElements = elements.map(
+                    (element) => element.kitElement.id
+                );
+                console.log(this.ownedKitElements);
+            });
         this.micropaymentsService.findAll().subscribe((micropayments: any) => {
             this.micropayments = micropayments;
             this.splitMicropayments();
@@ -50,12 +59,23 @@ export class ShopComponent implements OnInit {
                 this.micropaymentsService
                     .findOne(micropaymentId)
                     .subscribe((micropayment: any) => {
-                        if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(micropayment.reward)) {
-                            this.userKitElementsService.addKitElement(this.selectedUserId, micropayment.reward).subscribe(() => {});
+                        if (
+                            /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+                                micropayment.reward
+                            )
+                        ) {
+                            this.userKitElementsService
+                                .addKitElement(
+                                    this.selectedUserId,
+                                    micropayment.reward
+                                )
+                                .subscribe(() => {});
                             console.log(micropayment.reward);
                         } else {
                             let score = this.gameService.getCounter();
-                            this.gameService.setCounter(Number(score) + Number(micropayment.reward));
+                            this.gameService.setCounter(
+                                Number(score) + Number(micropayment.reward)
+                            );
                             console.log(micropayment.reward);
                         }
                         this.loading = false;
@@ -92,7 +112,14 @@ export class ShopComponent implements OnInit {
         return (price - 0.01).toFixed(2);
     }
 
+    isOwned(mp: Micropayment): boolean {
+        return this.ownedKitElements.includes(mp.reward);
+    }
+
     async purchase(micropayment: Micropayment) {
+        if (this.isOwned(micropayment)) {
+            return;
+        }
         this.loading = true;
         try {
             const response = await fetch(
