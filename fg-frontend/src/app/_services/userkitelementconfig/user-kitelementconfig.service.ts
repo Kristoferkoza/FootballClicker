@@ -7,7 +7,7 @@ import { UserKitElementConfig } from '../../_models/userkitelementconfig/user-ki
   providedIn: 'root',
 })
 export class UserKitElementConfigService {
-  private apiUrl = 'http://localhost:3000/user-kitelementconfig'; // Zmień na odpowiedni adres API
+  private apiUrl = 'http://localhost:3000/user-kitelementconfig';
 
   constructor(private http: HttpClient) {}
 

@@ -47,7 +47,6 @@ export class ShopComponent implements OnInit {
                 this.ownedKitElements = elements.map(
                     (element) => element.kitElement.id
                 );
-                console.log(this.ownedKitElements);
             });
         this.micropaymentsService.findAll().subscribe((micropayments: any) => {
             this.micropayments = micropayments;
