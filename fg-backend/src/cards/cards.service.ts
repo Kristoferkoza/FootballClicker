@@ -12,8 +12,11 @@ export class CardsService {
     private readonly cardsRepository: Repository<Card>,
   ) {}
 
-  async findAll() {
-    return this.cardsRepository.find();
+  findAll(page: number = 1, limit: number = 100) {
+    return this.cardsRepository.find({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
 
   async findOne(id: string) {

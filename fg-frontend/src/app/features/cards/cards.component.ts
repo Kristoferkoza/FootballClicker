@@ -14,14 +14,12 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-cards',
   standalone: true,
-  imports: [CommonModule, MatExpansionModule, ClubNamePipe, FormsModule],
+  imports: [CommonModule, MatExpansionModule, FormsModule],
   providers: [CardsService, UserCardsService, UsersService],
   templateUrl: './cards.component.html',
   styleUrls: ['./cards.component.scss'],
 })
 export class CardsComponent implements OnInit {
-  
-  viewMode: 'grid' | 'list' = 'grid';
   selectedUserId: string = '';
   allCards: Card[] = [];
   userCards: UserCards[] = [];
@@ -31,6 +29,15 @@ export class CardsComponent implements OnInit {
   maxOverall: number | null = null;
   sortBy: string = 'overallDesc';
   filteredCards: Card[] = [];
+  paginatedCards: Card[] = [];
+
+  selectedCardType: string = '';
+  selectedPosition: string = '';
+  itemsPerPage = 12;
+  currentPage = 1;
+  totalPages = 1;
+  cardTypes = Object.values(CardType);
+  positions: string[] = ["BR", "CPS", "PO", "ŚO", "LO", "CLS", "ŚPD", "ŚP", "LP", "PP", "ŚPO", "PS", "N", "LS"];
 
   constructor(
     private cardsService: CardsService,
@@ -56,10 +63,6 @@ export class CardsComponent implements OnInit {
     });
   }
 
-  toggleViewMode(mode: 'grid' | 'list') {
-    this.viewMode = mode;
-  }
-
   isOwned(card: Card): boolean {
     return !!this.ownedCardsMap[card.id];
   }
@@ -76,18 +79,22 @@ export class CardsComponent implements OnInit {
     return userCard ? userCard.quantity : 0;
   }
 
-  getFlagCode = (nationality: string): string | undefined => {
-    return FlagiKrajow[nationality as keyof typeof FlagiKrajow];
-  };
+  // getFlagCode = (nationality: string): string | undefined => {
+  //   return FlagiKrajow[nationality as keyof typeof FlagiKrajow];
+  // };
 
   applyFilters() {
     this.filteredCards = this.allCards.filter(card => {
       const matchesMin = this.minOverall ? card.overall >= this.minOverall : true;
       const matchesMax = this.maxOverall ? card.overall <= this.maxOverall : true;
-      return matchesMin && matchesMax;
+      const matchesType = this.selectedCardType ? card.cardType === this.selectedCardType : true;
+      const matchesPosition = this.selectedPosition ? card.position === this.selectedPosition : true;
+      
+      return matchesMin && matchesMax && matchesType && matchesPosition;
     });
-  
+
     this.sortCards();
+    this.updatePagination();
   }
 
   sortCards() {
@@ -100,5 +107,28 @@ export class CardsComponent implements OnInit {
         default: return b.overall - a.overall;
       }
     });
+  }
+
+  updatePagination() {
+    this.totalPages = Math.ceil(this.filteredCards.length / this.itemsPerPage);
+    this.currentPage = Math.max(1, Math.min(this.currentPage, this.totalPages));
+    this.paginatedCards = this.filteredCards.slice(
+      (this.currentPage - 1) * this.itemsPerPage,
+      this.currentPage * this.itemsPerPage
+    );
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagination();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagination();
+    }
   }
 }

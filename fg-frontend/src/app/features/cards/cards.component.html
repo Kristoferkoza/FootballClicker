@@ -1,110 +1,88 @@
 <div class="filters">
     <div class="filter-group">
-      <label>Filtruj:</label>
+      <label>Filtry:</label>
       <div class="filter-item">
-        <input type="number" [(ngModel)]="minOverall" placeholder="Min Overall" min="0" max="100">
-        <input type="number" [(ngModel)]="maxOverall" placeholder="Max Overall" min="0" max="100">
+        <input
+          type="number"
+          [(ngModel)]="minOverall"
+          placeholder="Min Overall"
+          min="0"
+          max="100"
+          (change)="applyFilters()"
+        />
+        <input
+          type="number"
+          [(ngModel)]="maxOverall"
+          placeholder="Max Overall"
+          min="0"
+          max="100"
+          (change)="applyFilters()"
+        />
       </div>
       <div class="filter-item">
-        <select [(ngModel)]="sortBy">
-          <option value="overallDesc">Sortuj według Overall (malejąco)</option>
-          <option value="overallAsc">Sortuj według Overall (rosnąco)</option>
-          <option value="nameAsc">Sortuj alfabetycznie (A-Z)</option>
-          <option value="nameDesc">Sortuj alfabetycznie (Z-A)</option>
+        <select [(ngModel)]="selectedCardType" (change)="applyFilters()">
+          <option value="">Wszystkie typy</option>
+          <option *ngFor="let type of cardTypes" [value]="type">{{ type }}</option>
+        </select>
+      </div>
+      <div class="filter-item">
+        <select [(ngModel)]="selectedPosition" (change)="applyFilters()">
+          <option value="">Wszystkie pozycje</option>
+          <option *ngFor="let position of positions" [value]="position">{{ position }}</option>
+        </select>
+      </div>
+      <div class="filter-item">
+        <select [(ngModel)]="sortBy" (change)="applyFilters()">
+          <option value="overallDesc">Overall (malejąco)</option>
+          <option value="overallAsc">Overall (rosnąco)</option>
+          <option value="nameAsc">Nazwa A-Z</option>
+          <option value="nameDesc">Nazwa Z-A</option>
         </select>
       </div>
     </div>
   </div>
-
-  <div class="view-mode-buttons">
-    <button 
-      [class.active]="viewMode === 'grid'"
-      (click)="toggleViewMode('grid')">
-      <i class="fas fa-th"></i> Widok Graficzny
-    </button>
-    <button 
-      [class.active]="viewMode === 'list'"
-      (click)="toggleViewMode('list')">
-      <i class="fas fa-list"></i> Widok Listy
-    </button>
-  </div>
-
-<div *ngIf="viewMode === 'grid'">
-    <div class="grid-view">
-        <div *ngFor="let card of allCards" class="card-item">
-            <img
-                [src]="'cards/' + card.club + '/' + card.imageUrl + '.png'"
-                [class.grayscale]="!isOwned(card)"
-                alt="{{ card.name }}"
-            />
-            <span *ngIf="isOwned(card)">
-                Znaleziona
-                {{ getFirstFoundDate(card) }} ({{ getQuantity(card) }})
-            </span>
-        </div>
+  
+  <div class="pagination-controls">
+    <div class="items-per-page">
+      <label>Kart na stronę:</label>
+      <select [(ngModel)]="itemsPerPage" (change)="applyFilters()">
+        <option>12</option>
+        <option>24</option>
+        <option>48</option>
+      </select>
     </div>
-</div>
-
-<div *ngIf="viewMode === 'list'">
-    <table>
-        <thead>
-            <tr>
-                <th>Nazwa</th>
-                <th>Overall</th>
-                <th>Pozycja</th>
-                <th>Narodowość</th>
-                <th>Klub</th>
-                <th>Typ Karty</th>
-                <th>TEM/PAR</th>
-                <th>STR/ŁAP</th>
-                <th>POD/WYK</th>
-                <th>DRY/REF</th>
-                <th>DEF/SZB</th>
-                <th>FIZ/UST</th>
-                <th>Czy Znaleziona</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let card of allCards">
-                <td>{{ card.name }}</td>
-                <td>{{ card.overall }}</td>
-                <td>{{ card.position }}</td>
-                <td>
-                    <img
-                        *ngIf="getFlagCode(card.nationality); else noFlag"
-                        [src]="
-                            'flags/' + getFlagCode(card.nationality) + '.svg'
-                        "
-                        [alt]="card.nationality"
-                        width="30"
-                    />
-                    <ng-template #noFlag>
-                        <span>{{ card.nationality }}</span>
-                    </ng-template>
-                </td>
-                <td>{{ card.club | clubName }}</td>
-                <td>{{ card.cardType }}</td>
-                <td>{{ card.tem }}</td>
-                <td>{{ card.str }}</td>
-                <td>{{ card.pod }}</td>
-                <td>{{ card.dry }}</td>
-                <td>{{ card.def }}</td>
-                <td>{{ card.fiz }}</td>
-                <td>
-                    <span *ngIf="isOwned(card); else notOwned">
-                        &#10003; {{ getFirstFoundDate(card) }} ({{
-                            getQuantity(card)
-                        }})
-                    </span>
-                    <ng-template #notOwned>
-                        &#10007;
-                    </ng-template>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="no-results" *ngIf="filteredCards.length === 0">
+    
+    <div class="page-navigation">
+      <button 
+        (click)="prevPage()" 
+        [disabled]="currentPage === 1"
+        class="page-button"
+      >
+        &lt;
+      </button>
+      <span>Strona {{ currentPage }} z {{ totalPages }}</span>
+      <button 
+        (click)="nextPage()" 
+        [disabled]="currentPage === totalPages"
+        class="page-button"
+      >
+        &gt;
+      </button>
+    </div>
+  </div>
+  
+  <div class="cards-grid">
+    <div *ngFor="let card of paginatedCards" class="card-container">
+      <div class="card-image">
+        <img
+          [src]="'cards/' + card.club + '/' + card.imageUrl + '.png'"
+          [class.grayscale]="!isOwned(card)"
+          alt="{{ card.name }}"
+        />
+      </div>
+    </div>
+  </div>
+  
+  <div class="no-results" *ngIf="filteredCards.length === 0">
     Brak kart spełniających kryteria wyszukiwania
-</div>
+  </div>
